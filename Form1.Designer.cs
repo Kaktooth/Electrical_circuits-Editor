@@ -32,7 +32,6 @@ namespace Electronic_Circuit_Editor
             this.panel1 = new System.Windows.Forms.Panel();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.electricity = new System.Windows.Forms.Button();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.panel2 = new System.Windows.Forms.Panel();
@@ -77,22 +76,6 @@ namespace Electronic_Circuit_Editor
             this.label1.Size = new System.Drawing.Size(30, 17);
             this.label1.TabIndex = 0;
             this.label1.Text = "Om";
-            // 
-            // electricity
-            // 
-            this.electricity.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.electricity.Cursor = System.Windows.Forms.Cursors.Cross;
-            this.electricity.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.electricity.ForeColor = System.Drawing.Color.White;
-            this.electricity.Image = global::Electronic_Circuit_Editor.Properties.Resources.enter;
-            this.electricity.Location = new System.Drawing.Point(504, 133);
-            this.electricity.Name = "electricity";
-            this.electricity.Size = new System.Drawing.Size(103, 54);
-            this.electricity.TabIndex = 0;
-            this.electricity.UseVisualStyleBackColor = true;
-            this.electricity.MouseDown += new System.Windows.Forms.MouseEventHandler(this.DragMouseDown);
-            this.electricity.MouseMove += new System.Windows.Forms.MouseEventHandler(this.DragMouseMove);
-            this.electricity.MouseUp += new System.Windows.Forms.MouseEventHandler(this.DragMouseUp);
             // 
             // pictureBox1
             // 
@@ -161,7 +144,6 @@ namespace Electronic_Circuit_Editor
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.flowLayoutPanel1);
-            this.Controls.Add(this.electricity);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.pictureBox1);
             this.Name = "Form1";
@@ -182,7 +164,6 @@ namespace Electronic_Circuit_Editor
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Button electricity;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
         private System.Windows.Forms.Panel panel2;

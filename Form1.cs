@@ -15,10 +15,15 @@ namespace Electronic_Circuit_Editor
         public Form1()
         {
             InitializeComponent();
-           
+            constructorText.Text = "electricity";
+            object sender = null;
+            MouseEventArgs ms = new MouseEventArgs(MouseButtons,1,1,1,1);
+            addResistor_Click(sender,ms);
+            constructorText.Text = "";
+
             
         }
-
+        List<Resistor> resistors = new List<Resistor>();
         bool isDragged = false;
         Point ptOffset;
         
@@ -65,6 +70,16 @@ namespace Electronic_Circuit_Editor
 
                 x.Text = b.Location.X.ToString();
                 y.Text = b.Location.Y.ToString();
+
+            }
+            else if (b.Name.Contains("electricity"))
+            {
+                string name = b.Name;
+                Control x = (TextBox)Controls.Find(name + "X", true)[0];
+                Control y = (TextBox)Controls.Find(name + "Y", true)[0];
+
+                x.Text = b.Location.X.ToString();
+                y.Text = b.Location.Y.ToString();
             }
            
         }
@@ -97,50 +112,125 @@ namespace Electronic_Circuit_Editor
         //}
         private void ResistorLocationCheck(object sender, KeyEventArgs e)
         {
-            if(e.KeyCode == Keys.Enter)
-            try {
-                
-                string name = ((TextBox)sender).Name;
+            if (e.KeyCode == Keys.Enter)
+                try
+                {
+                    Control b = new Control();
+                    string name = ((TextBox)sender).Name;
+                    name = name.Substring(0, name.Length - 1);
+
+                    //MessageBox.Show(name);
+                    if (name == "electricity")
+                    {
+                        b = pictureBox1.Controls[name];
+                    }
+                    else if (pictureBox1.Controls[name + "Resistor"] != null)
+                    {
+                        b = pictureBox1.Controls[name + "Resistor"];
+                    }
+                    else
+                    {
+                        MessageBox.Show("Error");
+                    }
+
+                    Control x = (TextBox)Controls.Find(name + "X", true)[0];
+                    Control y = (TextBox)Controls.Find(name + "Y", true)[0];
+                    b.Location = new Point(Convert.ToInt32(x.Text), Convert.ToInt32(y.Text));
+                }
+                catch (Exception E)
+                {
+                    MessageBox.Show(E.ToString());
+                }
+        }
+        private void JoinElectronics(object sender, KeyEventArgs e)
+        {
+            try
+            {
+                Control thisControl = new Control();
+                Control b = new Control();
+                thisControl = ((TextBox)sender);
+                string name = thisControl.Name;
                 name = name.Substring(0, name.Length - 1);
-             
-                //MessageBox.Show(name);
-                Control b = pictureBox1.Controls[name+"Resistor"];
-                
-                Control x = (TextBox)Controls.Find(name + "X", true)[0];
-                Control y = (TextBox)Controls.Find(name + "Y", true)[0];
-                
+                Control TextBox = (TextBox)Controls.Find(name + "joinTexBox", true)[0];
+                int addLength = 5;
+                Pen pen = Pens.Black;
+                if (name == "electricity")
+                {
+                    b = pictureBox1.Controls[TextBox.Text];
+                }
+                else if (pictureBox1.Controls[name + "Resistor"] != null)
+                {
+                    b = pictureBox1.Controls[TextBox.Text + "Resistor"];
+                }
+                else
+                {
+                    MessageBox.Show("Error");
+                }
+                Point startPoint = new Point();
+                Point endPoint = new Point();
+                // this.child = child;
+                startPoint.X = thisControl.Location.X + thisControl.Size.Width;
 
+                if (thisControl.Size.Height % 2 == 0)
+                {
+                    startPoint.Y = thisControl.Location.Y + (thisControl.Size.Height / 2);
+                }
+                else
+                {
+                    startPoint.Y = thisControl.Location.Y + ((thisControl.Size.Height + 1) / 2);
+                }
+                Point point2 = new Point(startPoint.X + addLength, startPoint.Y);
+                Point point3 = new Point(b.Location.X + addLength, b.Location.Y);
 
-                b.Location = new Point(Convert.ToInt32(x.Text), Convert.ToInt32(y.Text));
-                
-              //  MessageBox.Show($"{b.Location}, {x.Text}, {b.Name}");
+                using (var g = Graphics.FromImage(pictureBox1.Image))
+                {
+                    g.DrawLine(pen, startPoint, point2);
+                    g.DrawLine(pen, point2, point3);
+                    g.DrawLine(pen, point3, b.Location);
+                    //foreach (var point in points)
+                    //{
+                    //    g.DrawRectangle(pen, startPoint.X, startPoint.Y, 1, 1);
+                    //}
+                    pictureBox1.Refresh();
+                }
+
             }
-            catch(Exception E)
+            catch (Exception E)
             {
                 MessageBox.Show(E.ToString());
             }
-
         }
         private void addResistor_Click(object sender, EventArgs e)
         {
-            if (pictureBox1.Controls[constructorText.Text+"Resistor"] == null && constructorText.Text != "")
+            if (pictureBox1.Controls[constructorText.Text+"Resistor"] == null && constructorText.Text != "" && pictureBox1.Controls["electricity"] == null)
             {
                 Panel panel = new Panel();
                 Label label1 = new Label();
                 Label label2 = new Label();
                 Label label3 = new Label();
                 Label labelName = new Label();
+                TextBox joinTextBox = new TextBox();
+                Button joinButton = new Button();
                 TextBox X = new TextBox();
                 TextBox Y = new TextBox();
                 Button resistor = new Button();
-
+                
 
                 try
                 {
-
-                    resistor.Name = constructorText.Text + "Resistor";
-                    resistor.Location = new Point(ClientSize.Width / 2, ClientSize.Width / 2);
-                    resistor.Image = Electronic_Circuit_Editor.Properties.Resources.resistor;
+                    if (constructorText.Text != "electricity")
+                    {
+                        resistor.Name = constructorText.Text + "Resistor";
+                        resistor.Image = Electronic_Circuit_Editor.Properties.Resources.resistor;
+                    }
+                    else
+                    {
+                        resistor.Name = constructorText.Text;
+                        resistor.Image = Electronic_Circuit_Editor.Properties.Resources.enter;
+                    }
+                    
+                    resistor.Location = new Point((int)(ClientSize.Width / 2), (int)(ClientSize.Width / 2));
+                    
                     resistor.Text = "";
                     resistor.AutoSize = true;
                     resistor.MouseDown += DragMouseDown;
@@ -152,6 +242,9 @@ namespace Electronic_Circuit_Editor
                     resistor.ForeColor = Color.White;
                     resistor.UseVisualStyleBackColor = true;
                     pictureBox1.Controls.Add(resistor);
+                    Resistor res = new Resistor(1f,resistor.Text);
+                    resistors.Add(res);
+
 
                     panel.Name = constructorText.Text + "Panel";
                     panel.AutoSize = true;
@@ -161,6 +254,8 @@ namespace Electronic_Circuit_Editor
                     panel.Controls.Add(label3);
                     panel.Controls.Add(X);
                     panel.Controls.Add(Y);
+                    panel.Controls.Add(joinButton);
+                    panel.Controls.Add(joinTextBox);
 
                     labelName.Name = constructorText.Text + "NameLabel";
                     labelName.Text = "Name: " + constructorText.Text;
@@ -181,18 +276,26 @@ namespace Electronic_Circuit_Editor
                     Y.Text = resistor.Location.Y.ToString();
                     X.KeyDown += ResistorLocationCheck;
                     Y.KeyDown += ResistorLocationCheck;
-                    //MessageBox.Show($"{X.Name}, {Y.Name}");
-                    // + label1.Text.Length + 10
 
                     label2.Location = new Point(label1.Location.X, label1.Location.Y + 60);
                     label2.Name = constructorText.Text + "Label2";
-                    label2.Text = "Reverse Resistor: ";
+                    label2.Text = "Reverse Electronics: ";
                     label2.AutoSize = true;
 
                     label3.Location = new Point(label2.Location.X, label2.Location.Y + 60);
                     label3.Name = constructorText.Text + "Label3";
-                    label3.Text = "Join Line: ";
+                    label3.Text = "Join Electronics: ";
                     label3.AutoSize = true;
+
+                    joinTextBox.Location = new Point(label2.Location.X, label2.Location.Y + 75);
+                    joinTextBox.Name = constructorText.Text + "Label3";
+                    joinTextBox.AutoSize = true;
+                    joinTextBox.Name = constructorText.Text + "joinTextBox";
+
+                    joinButton.Location = new Point(label2.Location.X, label2.Location.Y + 95);
+                    joinButton.Name = constructorText.Text + "Label3";
+                    joinButton.Text = "Join";
+                    joinButton.AutoSize = true;
                 }
                 catch (Exception ex)
                 {
