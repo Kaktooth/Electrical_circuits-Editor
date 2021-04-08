@@ -24,6 +24,7 @@ namespace Electronic_Circuit_Editor
 
             
         }
+        Electricity electricity = new Electricity();
         List<Resistor> resistors = new List<Resistor>();
         bool isDragged = false;
         Point ptOffset;
@@ -207,13 +208,25 @@ namespace Electronic_Circuit_Editor
                     g.DrawLine(pen, startPoint, point2);
                     g.DrawLine(pen, point2, point3);
                     g.DrawLine(pen, point3, new Point(b.Location.X,endPoint.Y));
-                    //foreach (var point in points)
-                    //{
-                    //    g.DrawRectangle(pen, startPoint.X, startPoint.Y, 1, 1);
-                    //}
                     pictureBox1.Refresh();
                 }
-                MessageBox.Show(startPoint.X + " " + startPoint.Y + " " + thisControl.Location.X + " " + thisControl.Name);
+                string childName = b.Name.Replace("Resistor", "");
+                foreach (var el in resistors)
+                {
+                    if(el.electronicsName == name)
+                    {
+                        foreach (var el2 in resistors)
+                        {
+                            if (el2.electronicsName == childName)
+                            {
+                                el.child = el2;
+                                MessageBox.Show("Parent: "+ el.electronicsName + " Child: "+ el2.electronicsName);
+                            }
+                        }
+                            
+                    } 
+                }
+                MessageBox.Show(name + " " + childName);
             }
             catch (Exception E)
             {

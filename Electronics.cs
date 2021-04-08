@@ -21,40 +21,11 @@ namespace Electronic_Circuit_Editor
         public Electronics() { }
         public Electronics(string electronicsName) { this.electronicsName = electronicsName; }
 
-        public void Join(int addLength, Point thisLocation, Point thisSize, Point anotherLocation, Point anotherSize, Electricity child, PictureBox pictureBox)
+        public virtual void Join(Electricity child)
         {
             this.child = child;
-            startPoint.X = thisLocation.X + thisSize.X;
-
-            if (thisSize.Y % 2 == 0)
-            {
-                startPoint.Y = thisLocation.Y + (thisSize.Y / 2);
-            }
-            else
-            {
-                startPoint.Y = thisLocation.Y + ((thisSize.Y + 1) / 2);
-            }
-            Point point2 = new Point(startPoint.X + addLength, startPoint.Y);
-            Point point3 = new Point(anotherLocation.X + addLength, anotherLocation.Y);
-
-            using (var g = Graphics.FromImage(pictureBox.Image))
-            {
-                g.DrawLine(pen, startPoint, point2);
-                g.DrawLine(pen, point2, point3);
-                g.DrawLine(pen, point3, anotherLocation);
-                //foreach (var point in points)
-                //{
-                //    g.DrawRectangle(pen, startPoint.X, startPoint.Y, 1, 1);
-                //}
-                pictureBox.Refresh();
-            }
         }
-        public void RecFunc(Point point,Electronics anotherElectronics, int counter)
-        {
-           
-        }
-     
-        
+
         public virtual void Action()
         {
 
@@ -69,6 +40,7 @@ namespace Electronic_Circuit_Editor
         {
             return "Electricity";
         }
+      
     }
     class Resistor : Electronics
     {
