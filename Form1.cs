@@ -140,7 +140,7 @@ namespace Electronic_Circuit_Editor
                 MessageBox.Show(name);
                 Control TextBox = (TextBox)Controls.Find(name + "joinTextBox", true)[0];
                 int addLength = 5;
-                Pen pen = Pens.Black;
+                Pen pen = new Pen(Color.Black, 3.5f);
                 if (name == "electricity")
                 {
 
@@ -305,7 +305,9 @@ namespace Electronic_Circuit_Editor
                     elementButton.Location = new Point((int)(ClientSize.Width / 2), (int)(ClientSize.Width / 2));
 
                     elementButton.Text = "";
-                    elementButton.AutoSize = true;
+                    elementButton.Width = 69;
+                    elementButton.Height = 50;
+                    elementButton.FlatAppearance.BorderSize = 0;
                     elementButton.MouseDown += DragMouseDown;
                     elementButton.MouseUp += DragMouseUp;
                     elementButton.MouseMove += DragMouseMove;
