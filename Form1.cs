@@ -72,6 +72,10 @@ namespace Electronic_Circuit_Editor
 
                 x.Text = b.Location.X.ToString();
                 y.Text = b.Location.Y.ToString();
+                foreach (var el in electronics)
+                {
+                    if (el.electronicsName == b.Name) el.Location = b.Location;
+                }
 
             }
             else if (b.Name.Contains("electricity"))
@@ -82,7 +86,12 @@ namespace Electronic_Circuit_Editor
 
                 x.Text = b.Location.X.ToString();
                 y.Text = b.Location.Y.ToString();
+                foreach (var el in electronics)
+                {
+                    if (el.electronicsName == b.Name) el.Location = b.Location;
+                }
             }
+
            
         }
 
@@ -161,30 +170,65 @@ namespace Electronic_Circuit_Editor
                 }
                 Point startPoint = new Point();
                 Point endPoint = new Point();
-                // this.child = child;
-                startPoint.X = thisControl.Location.X + thisControl.Size.Width;
-                endPoint.X = b.Location.X - addLength;
-                if (thisControl.Size.Height % 2 == 0)
+                Point point2 = new Point();
+                Point point3 = new Point();
+                Point point4 = new Point();
+                MessageBox.Show("thisControl "+thisControl.Name+ thisControl.Location.X + " b "+ b.Name+ b.Location.X);
+                if (thisControl.Location.X < (b.Location.X-b.Size.Width))
                 {
-                    startPoint.Y = thisControl.Location.Y + (thisControl.Size.Height / 2);
+                   
+                    startPoint.X = thisControl.Location.X + thisControl.Size.Width;
+                    endPoint.X = b.Location.X - addLength;
+                    if (thisControl.Size.Height % 2 == 0)
+                    {
+                        startPoint.Y = thisControl.Location.Y + (thisControl.Size.Height / 2);
 
+                    }
+                    else
+                    {
+                        startPoint.Y = thisControl.Location.Y + ((thisControl.Size.Height + 1) / 2);
+                    }
+                    endPoint.Y = b.Location.Y + (b.Size.Height / 2);
+                    point2 = new Point(startPoint.X + addLength, startPoint.Y);
+                    point3 = new Point(endPoint.X, startPoint.Y);
+                    point4 = new Point(endPoint.X, endPoint.Y);
                 }
                 else
                 {
-                    startPoint.Y = thisControl.Location.Y + ((thisControl.Size.Height + 1) / 2);
+                    int minHeight = GetMinHeight();
+                    int maxHeight = GetMaxHeight();
+                    if (b.Location.Y == minHeight || b.Location.Y == maxHeight)
+                    {
+                        startPoint.X = thisControl.Location.X + thisControl.Size.Width;
+                        endPoint.X = b.Location.X + b.Size.Width - addLength;
+                        if (thisControl.Size.Height % 2 == 0)
+                        {
+                            startPoint.Y = thisControl.Location.Y + (thisControl.Size.Height / 2);
+
+                        }
+                        else
+                        {
+                            startPoint.Y = thisControl.Location.Y + ((thisControl.Size.Height + 1) / 2);
+                        }
+                        endPoint.Y = b.Location.Y + (b.Size.Height / 2);
+                        point2 = new Point(startPoint.X + addLength, startPoint.Y);
+                        point3 = new Point(startPoint.X + addLength, endPoint.Y);
+                        point4 = new Point(endPoint.X, endPoint.Y);
+                    }
+                    else
+                    {
+
+                    }
                 }
-                endPoint.Y = b.Location.Y + (b.Size.Height / 2);
-                Point point2 = new Point(startPoint.X + addLength, startPoint.Y);
-                Point point3 = new Point(endPoint.X,startPoint.Y);
-                Point point4 = new Point(endPoint.X, endPoint.Y);
-                using (var g = Graphics.FromImage(pictureBox1.Image))
-                {
-                    g.DrawLine(pen, startPoint, point2);
-                    g.DrawLine(pen, point2, point3);
-                    g.DrawLine(pen, point3, point4);
-                    g.DrawLine(pen, point4, new Point(b.Location.X,endPoint.Y));
-                    pictureBox1.Refresh();
-                }
+                    using (var g = Graphics.FromImage(pictureBox1.Image))
+                    {
+                        g.DrawLine(pen, startPoint, point2);
+                        g.DrawLine(pen, point2, point3);
+                        g.DrawLine(pen, point3, point4);
+                        g.DrawLine(pen, point4, new Point(b.Location.X, endPoint.Y));
+                        pictureBox1.Refresh();
+                    }
+                
                 string childName = b.Name;
                 foreach (var el in electronics)
                 {
@@ -206,6 +250,28 @@ namespace Electronic_Circuit_Editor
             {
                 MessageBox.Show(E.ToString());
             }
+        }
+        int GetMinHeight() 
+        { 
+            int[] heights = new int[electronics.Count];
+            int i = 0;
+            foreach (var el in electronics)
+            {
+                heights[i] = el.Location.Y;
+                    i++;
+            }
+            return heights.Min();
+        }
+        int GetMaxHeight()
+        {
+            int[] heights = new int[electronics.Count];
+            int i = 0;
+            foreach (var el in electronics)
+            {
+                heights[i] = el.Location.Y;
+                i++;
+            }
+            return heights.Max();
         }
         private void addResistor_Click(object sender, EventArgs e)
         {
@@ -250,7 +316,7 @@ namespace Electronic_Circuit_Editor
                     elementButton.UseVisualStyleBackColor = true;
                     pictureBox1.Controls.Add(elementButton);
                     Resistor res = new Resistor(1f, elementButton.Name);
-
+                    res.Location = elementButton.Location;
                     if (elementButton.Name != "electricity")
                     {
                         electronics.Add(res);
@@ -319,6 +385,15 @@ namespace Electronic_Circuit_Editor
 
 
                 flowLayoutPanel1.Controls.Add(panel);
+            }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            pictureBox1.Image = new Bitmap(pictureBox1.Width, pictureBox1.Height);
+            foreach (var el in electronics)
+            {
+                el.childList.Clear();
             }
         }
     }

@@ -13,6 +13,7 @@ namespace Electronic_Circuit_Editor
         public List<Electronics> childList = new List<Electronics>();
         public Color color { get; set; }
         private Pen pen = new Pen(Color.Black,1f);
+        public Point Location { get; set; }
         public Point startPoint = new Point();
         public Point endPoint = new Point();
         private Point[] points { get; set; }

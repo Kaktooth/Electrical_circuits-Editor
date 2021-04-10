@@ -38,6 +38,7 @@ namespace Electronic_Circuit_Editor
             this.constructorText = new System.Windows.Forms.TextBox();
             this.button2 = new System.Windows.Forms.Button();
             this.addResistor = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.flowLayoutPanel1.SuspendLayout();
@@ -102,12 +103,13 @@ namespace Electronic_Circuit_Editor
             // 
             // panel2
             // 
+            this.panel2.Controls.Add(this.button1);
             this.panel2.Controls.Add(this.constructorText);
             this.panel2.Controls.Add(this.button2);
             this.panel2.Controls.Add(this.addResistor);
             this.panel2.Location = new System.Drawing.Point(3, 3);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(276, 45);
+            this.panel2.Size = new System.Drawing.Size(276, 63);
             this.panel2.TabIndex = 0;
             // 
             // constructorText
@@ -135,6 +137,16 @@ namespace Electronic_Circuit_Editor
             this.addResistor.Text = "Add Resistor";
             this.addResistor.UseVisualStyleBackColor = true;
             this.addResistor.Click += new System.EventHandler(this.addResistor_Click);
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(10, 39);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(120, 24);
+            this.button1.TabIndex = 3;
+            this.button1.Text = "Disconnect All";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // Form1
             // 
@@ -170,6 +182,7 @@ namespace Electronic_Circuit_Editor
         private System.Windows.Forms.TextBox constructorText;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button addResistor;
+        private System.Windows.Forms.Button button1;
     }
 }
 
