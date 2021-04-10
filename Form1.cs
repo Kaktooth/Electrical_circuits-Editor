@@ -127,6 +127,7 @@ namespace Electronic_Circuit_Editor
                 Control b = new Control();
                 string name = ((Button)sender).Name;
                 name = name.Replace("Join","");
+                
                 MessageBox.Show(name);
                 Control TextBox = (TextBox)Controls.Find(name + "joinTextBox", true)[0];
                 int addLength = 5;
@@ -187,13 +188,13 @@ namespace Electronic_Circuit_Editor
                 string childName = b.Name;
                 foreach (var el in electronics)
                 {
-                    if (el.electronicsName == name)
+                    if (el.electronicsName == name|| el.electronicsName == name+"Resistor")
                     {
                         foreach (var el2 in electronics)
                         {
                             if (el2.electronicsName == childName)
                             {
-                                el.child = el2;
+                                el.childList.Add(el2);
                                 MessageBox.Show("Parent: "+ el.electronicsName + " Child: "+ el2.electronicsName);
                             }
                         }

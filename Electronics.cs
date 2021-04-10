@@ -10,7 +10,7 @@ namespace Electronic_Circuit_Editor
 {
     class Electronics
     {
-        public Electronics child { get; set; }
+        public List<Electronics> childList = new List<Electronics>();
         public Color color { get; set; }
         private Pen pen = new Pen(Color.Black,1f);
         public Point startPoint = new Point();
@@ -21,11 +21,7 @@ namespace Electronic_Circuit_Editor
         public Electronics() { }
         public Electronics(string electronicsName) { this.electronicsName = electronicsName; }
 
-        public virtual void Join(Electricity child)
-        {
-            this.child = child;
-        }
-
+      
         public virtual void Action()
         {
 
