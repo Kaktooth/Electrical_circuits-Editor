@@ -38,7 +38,6 @@ namespace Electronic_Circuit_Editor
             this.constructorText = new System.Windows.Forms.TextBox();
             this.button2 = new System.Windows.Forms.Button();
             this.addResistor = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.panel1.SuspendLayout();
             this.flowLayoutPanel1.SuspendLayout();
@@ -138,21 +137,7 @@ namespace Electronic_Circuit_Editor
             this.addResistor.TabIndex = 0;
             this.addResistor.Text = "Add Resistor";
             this.addResistor.UseVisualStyleBackColor = true;
-            this.addResistor.Click += new System.EventHandler(this.addResistor_Click);
-            // 
-            // button3
-            // 
-            this.button3.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.button3.CausesValidation = false;
-            this.button3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button3.ForeColor = System.Drawing.Color.White;
-            this.button3.Image = global::Electronic_Circuit_Editor.Properties.Resources.resistor;
-            this.button3.Location = new System.Drawing.Point(505, 155);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(127, 45);
-            this.button3.TabIndex = 4;
-            this.button3.UseVisualStyleBackColor = true;
-            this.button3.UseWaitCursor = true;
+            this.addResistor.Click += new System.EventHandler(this.AddResistor_Click);
             // 
             // pictureBox1
             // 
@@ -170,7 +155,6 @@ namespace Electronic_Circuit_Editor
             this.AutoSize = true;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.button3);
             this.Controls.Add(this.flowLayoutPanel1);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.pictureBox1);
@@ -199,7 +183,6 @@ namespace Electronic_Circuit_Editor
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button addResistor;
         private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button3;
     }
 }
 

@@ -18,7 +18,7 @@ namespace Electronic_Circuit_Editor
             constructorText.Text = "electricity";
             object sender = null;
             MouseEventArgs ms = new MouseEventArgs(MouseButtons,1,1,1,1);
-            addResistor_Click(sender,ms);
+            AddResistor_Click(sender,ms);
             constructorText.Text = "";
             pictureBox1.Image = new Bitmap(pictureBox1.Width, pictureBox1.Height);
 
@@ -174,33 +174,13 @@ namespace Electronic_Circuit_Editor
                 Point point3 = new Point();
                 Point point4 = new Point();
                 MessageBox.Show("thisControl "+thisControl.Name+ thisControl.Location.X + " b "+ b.Name+ b.Location.X);
-                if (thisControl.Location.X < (b.Location.X-b.Size.Width))
+                if (b.Name != "electricity")
                 {
-                   
-                    startPoint.X = thisControl.Location.X + thisControl.Size.Width;
-                    endPoint.X = b.Location.X - addLength;
-                    if (thisControl.Size.Height % 2 == 0)
+                    if (thisControl.Location.X < (b.Location.X - b.Size.Width))
                     {
-                        startPoint.Y = thisControl.Location.Y + (thisControl.Size.Height / 2);
 
-                    }
-                    else
-                    {
-                        startPoint.Y = thisControl.Location.Y + ((thisControl.Size.Height + 1) / 2);
-                    }
-                    endPoint.Y = b.Location.Y + (b.Size.Height / 2);
-                    point2 = new Point(startPoint.X + addLength, startPoint.Y);
-                    point3 = new Point(endPoint.X, startPoint.Y);
-                    point4 = new Point(endPoint.X, endPoint.Y);
-                }
-                else
-                {
-                    int minHeight = GetMinHeight();
-                    int maxHeight = GetMaxHeight();
-                    if (b.Location.Y == minHeight || b.Location.Y == maxHeight)
-                    {
                         startPoint.X = thisControl.Location.X + thisControl.Size.Width;
-                        endPoint.X = b.Location.X + b.Size.Width - addLength;
+                        endPoint.X = b.Location.X - addLength;
                         if (thisControl.Size.Height % 2 == 0)
                         {
                             startPoint.Y = thisControl.Location.Y + (thisControl.Size.Height / 2);
@@ -212,23 +192,84 @@ namespace Electronic_Circuit_Editor
                         }
                         endPoint.Y = b.Location.Y + (b.Size.Height / 2);
                         point2 = new Point(startPoint.X + addLength, startPoint.Y);
-                        point3 = new Point(startPoint.X + addLength, endPoint.Y);
+                        point3 = new Point(endPoint.X, startPoint.Y);
                         point4 = new Point(endPoint.X, endPoint.Y);
                     }
                     else
                     {
+                        int minHeight = GetMinHeight();
+                        int maxHeight = GetMaxHeight();
+                        if (b.Location.Y == minHeight || b.Location.Y == maxHeight)
+                        {
+                            startPoint.X = thisControl.Location.X + thisControl.Size.Width;
+                            endPoint.X = b.Location.X + b.Size.Width - addLength;
+                            if (thisControl.Size.Height % 2 == 0)
+                            {
+                                startPoint.Y = thisControl.Location.Y + (thisControl.Size.Height / 2);
 
+                            }
+                            else
+                            {
+                                startPoint.Y = thisControl.Location.Y + ((thisControl.Size.Height + 1) / 2);
+                            }
+                            endPoint.Y = b.Location.Y + (b.Size.Height / 2);
+                            point2 = new Point(startPoint.X + addLength, startPoint.Y);
+                            point3 = new Point(startPoint.X + addLength, endPoint.Y);
+                            point4 = new Point(endPoint.X, endPoint.Y);
+                        }
                     }
                 }
-                    using (var g = Graphics.FromImage(pictureBox1.Image))
+                else
+                {
+                    if (thisControl.Location.X < b.Location.X )
                     {
-                        g.DrawLine(pen, startPoint, point2);
-                        g.DrawLine(pen, point2, point3);
-                        g.DrawLine(pen, point3, point4);
-                        g.DrawLine(pen, point4, new Point(b.Location.X, endPoint.Y));
-                        pictureBox1.Refresh();
+                        MessageBox.Show("OK");
+                        startPoint.X = thisControl.Location.X;
+                        endPoint.X = b.Location.X + addLength;
+                        if (thisControl.Size.Height % 2 == 0)
+                        {
+                            startPoint.Y = thisControl.Location.Y + (thisControl.Size.Height / 2);
+
+                        }
+                        else
+                        {
+                            startPoint.Y = thisControl.Location.Y + ((thisControl.Size.Height + 1) / 2);
+                        }
+                        endPoint.Y = b.Location.Y + (b.Size.Height / 2);
+                        point2 = new Point(startPoint.X - addLength, startPoint.Y);
+                        point3 = new Point(startPoint.X - addLength, endPoint.Y);
+                        point4 = new Point(endPoint.X, endPoint.Y);
                     }
-                
+                    else
+                    {
+                        MessageBox.Show("NOK");
+
+                        startPoint.X = thisControl.Location.X;
+                        endPoint.X = b.Location.X - addLength;
+                        if (thisControl.Size.Height % 2 == 0)
+                        {
+                            startPoint.Y = thisControl.Location.Y + (thisControl.Size.Height / 2);
+
+                        }
+                        else
+                        {
+                            startPoint.Y = thisControl.Location.Y + ((thisControl.Size.Height + 1) / 2);
+                        }
+                        endPoint.Y = b.Location.Y + (b.Size.Height / 2);
+                        point2 = new Point(endPoint.X - addLength, startPoint.Y);
+                        point3 = new Point(endPoint.X - addLength, startPoint.Y);
+                        point4 = new Point(endPoint.X - addLength, endPoint.Y);
+
+                    }                  
+                }
+                using (var g = Graphics.FromImage(pictureBox1.Image))
+                {
+                    g.DrawLine(pen, startPoint, point2);
+                    g.DrawLine(pen, point2, point3);
+                    g.DrawLine(pen, point3, point4);
+                    g.DrawLine(pen, point4, new Point(b.Location.X, endPoint.Y));
+                    pictureBox1.Refresh();
+                }
                 string childName = b.Name;
                 foreach (var el in electronics)
                 {
@@ -273,7 +314,7 @@ namespace Electronic_Circuit_Editor
             }
             return heights.Max();
         }
-        private void addResistor_Click(object sender, EventArgs e)
+        private void AddResistor_Click(object sender, EventArgs e)
         {
             if (pictureBox1.Controls[constructorText.Text+"Resistor"] == null && constructorText.Text != "" )
             {

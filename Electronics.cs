@@ -11,8 +11,8 @@ namespace Electronic_Circuit_Editor
     class Electronics
     {
         public List<Electronics> childList = new List<Electronics>();
-        public Color color { get; set; }
-        private Pen pen = new Pen(Color.Black,1f);
+        public Color Color { get; set; }
+        readonly private Pen pen = new Pen(Color.Black,1f);
         public Point Location { get; set; }
         public Point startPoint = new Point();
         public Point endPoint = new Point();
@@ -45,9 +45,7 @@ namespace Electronic_Circuit_Editor
         public Conections currentConection = Conections.Series;
         public double Om { get; set; }
         public Resistor() { }
-        public Resistor(double Om,string electronicsName) { this.Om = Om;  this.electronicsName = electronicsName;
-
-        }
+        public Resistor(double Om,string electronicsName) { this.Om = Om;  this.electronicsName = electronicsName; }
         public Resistor(double Om) { this.Om = Om; }
        
         public override string ToString()
@@ -64,7 +62,6 @@ namespace Electronic_Circuit_Editor
                 case Conections.Parallel:
                     CircuitOm += 1/Om;
                     break;
-
             }
         }
     }
