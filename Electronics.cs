@@ -42,24 +42,24 @@ namespace Electronic_Circuit_Editor
     {
         public enum Conections { Series, Parallel } //series and parallel connection
         public Conections currentConection = Conections.Series;
-        public double Om { get; set; }
+        public double Resistance { get; set; }
         public Resistor() { }
-        public Resistor(double Om,string electronicsName) { this.Om = Om;  this.electronicsName = electronicsName; }
-        public Resistor(double Om) { this.Om = Om; }
+        public Resistor(double Resistance, string electronicsName) { this.Resistance = Resistance;  this.electronicsName = electronicsName; }
+        public Resistor(double Resistance) { this.Resistance = Resistance; }
        
         public override string ToString()
         {
-            return Om.ToString();
+            return Resistance.ToString();
         }
         public override void Action()
         {
             switch (currentConection)
             {
                 case Conections.Series:
-                    CircuitOm += Om;
+                    CircuitOm += Resistance;
                     break;
                 case Conections.Parallel:
-                    CircuitOm += 1/Om;
+                    CircuitOm += 1/ Resistance;
                     break;
             }
         }

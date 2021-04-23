@@ -123,6 +123,7 @@ namespace Electronic_Circuit_Editor
         {
             try
             {
+                bool isParallel = false;
                 Control thisControl = new Control();
                 Control b = new Control();
                 string name = ((Button)sender).Name;
@@ -130,7 +131,7 @@ namespace Electronic_Circuit_Editor
 
                 MessageBox.Show(name);
                 Control TextBox = (TextBox)Controls.Find(name + "joinTextBox", true)[0];
-                int addLength = 5;
+                int addLength = 7;
                 Pen pen = new Pen(Color.Black, 3.5f);
                 if (name == "electricity")
                 {
@@ -140,12 +141,14 @@ namespace Electronic_Circuit_Editor
                 else if (pictureBox1.Controls[name + "Resistor"] != null)
                 {
                     thisControl = pictureBox1.Controls[name + "Resistor"];
+                    
                 }
                 else
                 {
                     MessageBox.Show("Error");
                 }
-
+                isParallel = ((CheckBox)flowLayoutPanel1.Controls.Find(name + "Parallel", true)[0]).Checked;
+               
                 if (TextBox.Text == "electricity")
                 {
 
@@ -166,7 +169,61 @@ namespace Electronic_Circuit_Editor
                 Point point4 = new Point();
                 int locationX = b.Location.X;
                 MessageBox.Show("thisControl " + thisControl.Name + thisControl.Location.X + " b " + b.Name + b.Location.X);
-                if (b.Name != "electricity")
+                if (isParallel == true)
+                {
+                    MessageBox.Show("Parallel");
+
+
+                    startPoint.X = thisControl.Location.X + thisControl.Size.Width;
+                    endPoint.X = b.Location.X + b.Size.Width;
+                    if (thisControl.Size.Height % 2 == 0)
+                    {
+                        startPoint.Y = thisControl.Location.Y + (thisControl.Size.Height / 2);
+
+                    }
+                    else
+                    {
+                        startPoint.Y = thisControl.Location.Y + ((thisControl.Size.Height + 1) / 2);
+                    }
+                    endPoint.Y = b.Location.Y + (b.Size.Height / 2);
+                    point2 = new Point(startPoint.X + addLength, startPoint.Y);
+                    point3 = new Point(endPoint.X + addLength, endPoint.Y);
+                    point4 = new Point(endPoint.X + addLength, endPoint.Y);
+                    using (var g = Graphics.FromImage(pictureBox1.Image))
+                    {
+                        g.DrawLine(pen, startPoint, point2);
+                        g.DrawLine(pen, point2, point3);
+                        g.DrawLine(pen, point3, point4);
+                        g.DrawLine(pen, point4, new Point(locationX, endPoint.Y));
+                        pictureBox1.Refresh();
+                    }
+                    startPoint.X = thisControl.Location.X;
+                    endPoint.X = b.Location.X;
+                    if (thisControl.Size.Height % 2 == 0)
+                    {
+                        startPoint.Y = thisControl.Location.Y + (thisControl.Size.Height / 2);
+
+                    }
+                    else
+                    {
+                        startPoint.Y = thisControl.Location.Y + ((thisControl.Size.Height + 1) / 2);
+                    }
+                    endPoint.Y = b.Location.Y + (b.Size.Height / 2);
+                    point2 = new Point(startPoint.X - addLength, startPoint.Y);
+                    point3 = new Point(endPoint.X -addLength, startPoint.Y);
+                    point4 = new Point(endPoint.X - addLength, endPoint.Y);
+                    using (var g = Graphics.FromImage(pictureBox1.Image))
+                    {
+                        g.DrawLine(pen, startPoint, point2);
+                        g.DrawLine(pen, point2, point3);
+                        g.DrawLine(pen, point3, point4);
+                        g.DrawLine(pen, point4, new Point(b.Location.X, endPoint.Y));
+                        pictureBox1.Refresh();
+                    }
+
+
+                }
+                else if (b.Name != "electricity" && isParallel == false)
                 {
                     if (thisControl.Location.X < (b.Location.X - b.Size.Width))
                     {
@@ -207,6 +264,14 @@ namespace Electronic_Circuit_Editor
                         point3 = new Point(startPoint.X + addLength, endPoint.Y);
                         point4 = new Point(endPoint.X, endPoint.Y);
 
+                    }
+                    using (var g = Graphics.FromImage(pictureBox1.Image))
+                    {
+                        g.DrawLine(pen, startPoint, point2);
+                        g.DrawLine(pen, point2, point3);
+                        g.DrawLine(pen, point3, point4);
+                        g.DrawLine(pen, point4, new Point(locationX, endPoint.Y));
+                        pictureBox1.Refresh();
                     }
                 }
                 else
@@ -293,15 +358,16 @@ namespace Electronic_Circuit_Editor
                         point4 = new Point(endPoint.X - addLength, endPoint.Y);
 
                     }
+                    using (var g = Graphics.FromImage(pictureBox1.Image))
+                    {
+                        g.DrawLine(pen, startPoint, point2);
+                        g.DrawLine(pen, point2, point3);
+                        g.DrawLine(pen, point3, point4);
+                        g.DrawLine(pen, point4, new Point(locationX, endPoint.Y));
+                        pictureBox1.Refresh();
+                    }
                 }
-                using (var g = Graphics.FromImage(pictureBox1.Image))
-                {
-                    g.DrawLine(pen, startPoint, point2);
-                    g.DrawLine(pen, point2, point3);
-                    g.DrawLine(pen, point3, point4);
-                    g.DrawLine(pen, point4, new Point(locationX, endPoint.Y));
-                    pictureBox1.Refresh();
-                }
+              
                 string childName = b.Name;
                 foreach (var el in electronics)
                 {
@@ -338,6 +404,7 @@ namespace Electronic_Circuit_Editor
                 TextBox X = new TextBox();
                 TextBox Y = new TextBox();
                 Button elementButton = new Button();
+               
 
 
                 try
@@ -425,11 +492,37 @@ namespace Electronic_Circuit_Editor
                     joinTextBox.Name = constructorText.Text + "Label3";
                     joinTextBox.AutoSize = true;
                     joinTextBox.Name = constructorText.Text + "joinTextBox";
-                    joinButton.Location = new Point(label2.Location.X, label2.Location.Y + 95);
+
+                    CheckBox isParallel = new CheckBox();
+                    isParallel.Location = new Point(label2.Location.X, label2.Location.Y + 95);
+                    isParallel.Text = "isParallel";
+                    isParallel.AutoSize = true;
+                    isParallel.Name = constructorText.Text + "Parallel";
+                    panel.Controls.Add(isParallel);
+
+                    joinButton.Location = new Point(label2.Location.X, label2.Location.Y + 120);
                     joinButton.Name = constructorText.Text + "Join";
                     joinButton.Text = "Join";
                     joinButton.AutoSize = true;
                     joinButton.Click += JoinElectronics;
+
+
+                    if (elementButton.Name != "electricity")
+                    {
+                        Label labelRes = new Label();
+                        TextBox Resistance = new TextBox();
+                        labelRes.Name = constructorText.Text + "labelres";
+                        labelRes.Location = new Point(label2.Location.X, label2.Location.Y + 145);
+                        labelRes.Text = "Resistance";
+                        Resistance.Name = constructorText.Text + "Resistance";
+                        Resistance.Location = new Point(label2.Location.X , label2.Location.Y + 165);
+                        Resistance.KeyDown += Resistance_Enter;
+                        
+                        
+                        panel.Controls.Add(labelRes);
+                        panel.Controls.Add(Resistance);
+                    }
+                   
                 }
                 catch (Exception ex)
                 {
@@ -438,6 +531,36 @@ namespace Electronic_Circuit_Editor
 
 
                 flowLayoutPanel1.Controls.Add(panel);
+            }
+        }
+
+        private void Resistance_Enter(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                var b = ((TextBox)sender);
+                string name = ((TextBox)sender).Name;
+                name = name.Replace("Resistance", "");
+                foreach (var el in electronics)
+                {
+                    MessageBox.Show(el.electronicsName);
+                    if (el.electronicsName == name+"Resistor")
+                    {
+                        if (el is Resistor)
+                        {
+                            try
+                            {
+                                ((Resistor)el).Resistance = Convert.ToDouble(b.Text);
+                                MessageBox.Show(Convert.ToDouble(b.Text).ToString());
+                            }
+                            catch (Exception ex)
+                            {
+                                MessageBox.Show("Wrong Format");
+                            }
+                        }
+
+                    }
+                }
             }
         }
 
@@ -470,6 +593,29 @@ namespace Electronic_Circuit_Editor
                 i++;
             }
             return heights.Max();
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            
+            foreach (var el in electronics)
+            {
+
+                if (el is Electricity)
+                {
+                    try
+                    {
+                        el.Action();
+
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("Wrong Format");
+                    }
+
+                }
+
+            }
         }
     }
 }

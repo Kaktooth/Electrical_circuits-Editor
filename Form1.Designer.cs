@@ -39,6 +39,7 @@ namespace Electronic_Circuit_Editor
             this.button2 = new System.Windows.Forms.Button();
             this.addResistor = new System.Windows.Forms.Button();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.button3 = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.flowLayoutPanel1.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -50,33 +51,34 @@ namespace Electronic_Circuit_Editor
             this.panel1.AllowDrop = true;
             this.panel1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.panel1.Controls.Add(this.button3);
             this.panel1.Controls.Add(this.textBox1);
             this.panel1.Controls.Add(this.label1);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Right;
             this.panel1.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.panel1.Location = new System.Drawing.Point(694, 0);
+            this.panel1.Location = new System.Drawing.Point(632, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(106, 450);
+            this.panel1.Size = new System.Drawing.Size(168, 450);
             this.panel1.TabIndex = 0;
             // 
             // textBox1
             // 
             this.textBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.textBox1.Enabled = false;
-            this.textBox1.Location = new System.Drawing.Point(39, 16);
+            this.textBox1.Location = new System.Drawing.Point(36, 69);
             this.textBox1.Name = "textBox1";
             this.textBox1.ReadOnly = true;
-            this.textBox1.Size = new System.Drawing.Size(66, 15);
+            this.textBox1.Size = new System.Drawing.Size(100, 15);
             this.textBox1.TabIndex = 1;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(3, 16);
+            this.label1.Location = new System.Drawing.Point(48, 40);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(30, 17);
+            this.label1.Size = new System.Drawing.Size(78, 17);
             this.label1.TabIndex = 0;
-            this.label1.Text = "Om";
+            this.label1.Text = "Resistance";
             // 
             // flowLayoutPanel1
             // 
@@ -148,6 +150,16 @@ namespace Electronic_Circuit_Editor
             this.pictureBox1.TabIndex = 1;
             this.pictureBox1.TabStop = false;
             // 
+            // button3
+            // 
+            this.button3.Location = new System.Drawing.Point(6, 107);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(148, 24);
+            this.button3.TabIndex = 4;
+            this.button3.Text = "Calculate Resistance";
+            this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -183,6 +195,7 @@ namespace Electronic_Circuit_Editor
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button addResistor;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button button3;
     }
 }
 
