@@ -133,6 +133,7 @@ namespace Electronic_Circuit_Editor
                 Control TextBox = (TextBox)Controls.Find(name + "joinTextBox", true)[0];
                 int addLength = 7;
                 Pen pen = new Pen(Color.Black, 3.5f);
+              
                 if (name == "electricity")
                 {
 
@@ -412,12 +413,17 @@ namespace Electronic_Circuit_Editor
                     if (constructorText.Text != "electricity")
                     {
                         elementButton.Name = constructorText.Text + "Resistor";
-                        elementButton.Image = Electronic_Circuit_Editor.Properties.Resources.resistor;
+                        Bitmap resistor = Electronic_Circuit_Editor.Properties.Resources.resistor;
+                        resistor.MakeTransparent(Color.White);
+                        elementButton.Image = resistor;
                     }
                     else
                     {
                         elementButton.Name = constructorText.Text;
-                        elementButton.Image = Electronic_Circuit_Editor.Properties.Resources.enter;
+                        Bitmap electricity = Electronic_Circuit_Editor.Properties.Resources.enter;
+                        electricity.MakeTransparent(Color.White);
+                        elementButton.Image = electricity;
+                        pictureBox2.Image = electricity;
                     }
 
                     elementButton.Location = new Point((int)(ClientSize.Width / 2), (int)(ClientSize.Width / 2));
@@ -600,22 +606,87 @@ namespace Electronic_Circuit_Editor
             
             foreach (var el in electronics)
             {
+                el.ResetResistance();
+                //el.isParallel = ((CheckBox)flowLayoutPanel1.Controls.Find(el.electronicsName + "Parallel", true)[0]).Checked;
+                //if(el.isParallel == true && el is Resistor)
+                //{
+                //    ((Resistor)el).currentConection = Resistor.Conections.Parallel;
+                //}
+            }
+            foreach (var el in electronics)
+            {
 
                 if (el is Electricity)
                 {
-                    try
-                    {
-                        el.Action();
-
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show("Wrong Format");
-                    }
+                    Childs((Electricity)el);
 
                 }
 
             }
+        }
+        List<string> used = new List<string>();
+        void Childs(Electronics el)
+        {
+            if(el.childList[0] is Electricity)
+            {
+                MessageBox.Show(el.GetCircuitResistance().ToString());
+                return;
+            }
+            try
+            {
+                if (el.childList.Count > 1)
+                {
+                    Resistor res = el.childList[0] as Resistor;
+                    double mul = 1;
+                    double sum = 0;
+                    foreach (var Child in el.childList)
+                    {
+                        Resistor r = Child as Resistor;
+                        r.currentConection = Resistor.Conections.Parallel;
+                        mul *= r.GetResistance();
+                        sum += r.GetResistance();
+                        
+                      
+                    }
+                    bool isUsed = false;
+                    res.SetCircuitResistance(res.GetCircuitResistance() + (mul / sum));
+                    foreach (var name in used)
+                    {
+                        if (el.electronicsName == name)
+                        {
+                            isUsed = true;
+                        }
+                    }
+                    if (isUsed == false)
+                    {
+                        Childs(el.childList[0]);
+                    }
+                }
+                else
+                {
+                    Resistor r = el.childList[0] as Resistor;
+                    r.Action();
+                    Childs(el.childList[0]);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Wrong Format");
+            }
+        }
+        Bitmap DotBackground(Bitmap b)
+        {
+            for (int i = 0; i < b.Width; i++)
+            {
+                for (int j = 0; j < b.Height; j++)
+                {
+                    if (i % 5 == 0 && j % 5 == 0)
+                    {
+                        b.SetPixel(i, j, Color.Black);
+                    }
+                }
+            }
+            return b;
         }
     }
 }

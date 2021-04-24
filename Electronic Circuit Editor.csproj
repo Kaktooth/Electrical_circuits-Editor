@@ -84,6 +84,7 @@
   <ItemGroup>
     <Content Include="enter.png" />
     <Content Include="resistor.png" />
+    <None Include="Resources\21-218295_black-polka-dot-background-png-polka-dot-texture.png" />
     <Content Include="volt.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
