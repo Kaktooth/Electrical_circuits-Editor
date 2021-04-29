@@ -23,17 +23,20 @@ namespace Electronic_Circuit_Editor
 
         List<Electronics> electronics = new List<Electronics>();
         bool isDragged = false;
-        Point ptOffset;
+        Point ptOffset = new Point();
 
         private void DragMouseDown(object sender, MouseEventArgs e)
         {
             Button b = ((Button)sender);
+           
             if (e.Button == MouseButtons.Left)
             {
+                b.MouseEnter -= OnElementEnter;
+                b.MouseLeave -= OnElementLeave;
                 isDragged = true;
                 Point ptStartPosition = b.PointToScreen(new Point(e.X, e.Y));
 
-                ptOffset = new Point();
+               ;
                 ptOffset.X = b.Location.X - ptStartPosition.X;
                 ptOffset.Y = b.Location.Y - ptStartPosition.Y;
             }
@@ -53,7 +56,7 @@ namespace Electronic_Circuit_Editor
                 newPoint.Offset(ptOffset);
                 b.Location = newPoint;
                 string replaced = b.Name.Replace("Resistor", "");
-                Label l = Controls.Find(replaced + "Display", true)[0] as Label;
+                Label l = (pictureBox1.Controls[replaced + "Display"]) as Label;
                 l.Location = new Point(b.Location.X, b.Location.Y + 30);
 
             }
@@ -62,6 +65,7 @@ namespace Electronic_Circuit_Editor
         private void DragMouseUp(object sender, MouseEventArgs e)
         {
             Button b = ((Button)sender);
+
             isDragged = false;
             if (b.Name.Contains("Resistor"))
             {
@@ -71,6 +75,8 @@ namespace Electronic_Circuit_Editor
 
                 x.Text = b.Location.X.ToString();
                 y.Text = b.Location.Y.ToString();
+                b.MouseEnter += OnElementEnter;
+                b.MouseLeave += OnElementLeave;
             }
             else if (b.Name.Contains("electricity"))
             {
@@ -80,6 +86,8 @@ namespace Electronic_Circuit_Editor
 
                 x.Text = b.Location.X.ToString();
                 y.Text = b.Location.Y.ToString();
+                b.MouseEnter += OnElementEnter;
+                b.MouseLeave += OnElementLeave;
             }
 
 
@@ -128,7 +136,7 @@ namespace Electronic_Circuit_Editor
                 string name = ((Button)sender).Name;
                 name = name.Replace("Join", "");
 
-                MessageBox.Show(name);
+                //MessageBox.Show(name);
                 Control TextBox = (TextBox)Controls.Find(name + "joinTextBox", true)[0];
                 int addLength = 7;
                 Pen pen = new Pen(Color.Black, 3.5f);
@@ -168,27 +176,51 @@ namespace Electronic_Circuit_Editor
                 Point point3 = new Point();
                 Point point4 = new Point();
                 int locationX = b.Location.X;
-                MessageBox.Show("thisControl " + thisControl.Name + thisControl.Location.X + " b " + b.Name + b.Location.X);
+                //MessageBox.Show("thisControl " + thisControl.Name + thisControl.Location.X + " b " + b.Name + b.Location.X);
                 if (isParallel == true)
                 {
-                    MessageBox.Show("Parallel");
-
-
-                    startPoint.X = thisControl.Location.X + thisControl.Size.Width;
-                    endPoint.X = b.Location.X + b.Size.Width;
-                    if (thisControl.Size.Height % 2 == 0)
+                    int modifyHeight = 0;
+                    int maxHeight = GetMaxHeight();
+                    int minHeight = GetMinHeight();
+                    if (thisControl.Location.X > b.Location.X)
                     {
-                        startPoint.Y = thisControl.Location.Y + (thisControl.Size.Height / 2);
+                        
+                        if (thisControl.Size.Height % 2 == 0)
+                        {
+                            startPoint.Y = thisControl.Location.Y + (thisControl.Size.Height / 2);
 
+                        }
+                        else
+                        {
+                            startPoint.Y = thisControl.Location.Y + ((thisControl.Size.Height + 1) / 2);
+                        }
+                        if (startPoint.Y >= b.Location.Y)
+                        {
+                            modifyHeight = maxHeight - b.Location.Y + 50;
+                            startPoint.X = thisControl.Location.X + thisControl.Size.Width;
+                            endPoint.X = b.Location.X;
+                            endPoint.Y = b.Location.Y + (b.Size.Height / 2);
+
+                            point2 = new Point(startPoint.X + addLength, startPoint.Y);
+                            point3 = new Point(startPoint.X + addLength, endPoint.Y + modifyHeight);
+                            point4 = new Point(endPoint.X - 2, endPoint.Y + modifyHeight);
+                            locationX -= 2;
+                            
+                        }
+                        else
+                        {
+                            modifyHeight = minHeight - b.Location.Y + 50;
+                            startPoint.X = thisControl.Location.X + thisControl.Size.Width;
+                            endPoint.X = b.Location.X;
+                            endPoint.Y = b.Location.Y + (b.Size.Height / 2);
+
+                            point2 = new Point(startPoint.X + addLength, startPoint.Y);
+                            point3 = new Point(startPoint.X + addLength, endPoint.Y + modifyHeight);
+                            point4 = new Point(endPoint.X - 2, endPoint.Y + modifyHeight);
+                            locationX -= 2;
+                        }
                     }
-                    else
-                    {
-                        startPoint.Y = thisControl.Location.Y + ((thisControl.Size.Height + 1) / 2);
-                    }
-                    endPoint.Y = b.Location.Y + (b.Size.Height / 2);
-                    point2 = new Point(startPoint.X + addLength, startPoint.Y);
-                    point3 = new Point(endPoint.X + addLength, endPoint.Y);
-                    point4 = new Point(endPoint.X + addLength, endPoint.Y);
+                  
                     using (var g = Graphics.FromImage(pictureBox1.Image))
                     {
                         g.DrawLine(pen, startPoint, point2);
@@ -197,30 +229,6 @@ namespace Electronic_Circuit_Editor
                         g.DrawLine(pen, point4, new Point(locationX, endPoint.Y));
                         pictureBox1.Refresh();
                     }
-                    startPoint.X = thisControl.Location.X;
-                    endPoint.X = b.Location.X;
-                    if (thisControl.Size.Height % 2 == 0)
-                    {
-                        startPoint.Y = thisControl.Location.Y + (thisControl.Size.Height / 2);
-
-                    }
-                    else
-                    {
-                        startPoint.Y = thisControl.Location.Y + ((thisControl.Size.Height + 1) / 2);
-                    }
-                    endPoint.Y = b.Location.Y + (b.Size.Height / 2);
-                    point2 = new Point(startPoint.X - addLength, startPoint.Y);
-                    point3 = new Point(endPoint.X - addLength, startPoint.Y);
-                    point4 = new Point(endPoint.X - addLength, endPoint.Y);
-                    using (var g = Graphics.FromImage(pictureBox1.Image))
-                    {
-                        g.DrawLine(pen, startPoint, point2);
-                        g.DrawLine(pen, point2, point3);
-                        g.DrawLine(pen, point3, point4);
-                        g.DrawLine(pen, point4, new Point(b.Location.X, endPoint.Y));
-                        pictureBox1.Refresh();
-                    }
-
 
                 }
                 else if (b.Name != "electricity" && isParallel == false)
@@ -282,7 +290,6 @@ namespace Electronic_Circuit_Editor
 
                     if ((b.Location.Y < thisControl.Location.Y + thisControl.Size.Height) && (b.Location.Y + b.Size.Height > thisControl.Location.Y))
                     {
-                        MessageBox.Show("OK");
                         if (thisControl.Size.Height % 2 == 0)
                         {
                             startPoint.Y = thisControl.Location.Y + (thisControl.Size.Height / 2);
@@ -532,7 +539,7 @@ namespace Electronic_Circuit_Editor
                         labelRes.Location = new Point(label2.Location.X, label2.Location.Y + 145);
                         labelRes.Text = "Resistance";
                         Resistance.Name = constructorText.Text + "Resistance";
-                        Resistance.Location = new Point(label2.Location.X, label2.Location.Y + 165);
+                        Resistance.Location = new Point(label2.Location.X, label2.Location.Y + 170);
                         Resistance.KeyDown += Resistance_Enter;
 
 
