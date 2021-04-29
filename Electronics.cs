@@ -8,14 +8,14 @@ using System.Windows.Forms;
 
 namespace Electronic_Circuit_Editor
 {
-    class Electronics
+    abstract class Electronics
     {
         public List<Electronics> childList = new List<Electronics>();
-        public Color Color { get; set; }
+        Color Color { get; set; }
         readonly private Pen pen = new Pen(Color.Black,1f);
-        public Point startPoint = new Point();
-        public Point endPoint = new Point();
-        public bool isParallel { get; set; }
+        Point startPoint = new Point();
+        Point endPoint = new Point();
+        bool isParallel { get; set; }
         private Point[] points { get; set; }
         public static double CircuitResistance { get; set; }
         public String electronicsName { get; set; }
@@ -37,17 +37,25 @@ namespace Electronic_Circuit_Editor
         {
 
         }
+        public abstract string Display();
 
     }
     class Electricity : Electronics
     {
         public Electricity() { }
         public Electricity(string electronicsName) { this.electronicsName = electronicsName; }
+
+        public override string Display()
+        {
+            return "Electricity\n" + "Name: " + electronicsName;
+        }
+
         public override string ToString()
         {
             return "Electricity";
         }
-      
+        
+        
     }
     class Resistor : Electronics
     {
@@ -64,7 +72,7 @@ namespace Electronic_Circuit_Editor
         }
         public override string ToString()
         {
-            return Resistance.ToString();
+            return "Resistor";
         }
         public override void Action()
         {
@@ -79,6 +87,10 @@ namespace Electronic_Circuit_Editor
             }
         }
 
+        public override string Display()
+        {
+            return "Resistor\n" + "Name: " + electronicsName+"\n"+"Resistance: "+Resistance;
+        }
     }
 
 }

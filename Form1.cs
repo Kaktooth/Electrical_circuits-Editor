@@ -56,8 +56,11 @@ namespace Electronic_Circuit_Editor
                 Point newPoint = b.PointToScreen(new Point(e.X, e.Y));
                 newPoint.Offset(ptOffset);
                 b.Location = newPoint;
-            }
+                string replaced = b.Name.Replace("Resistor", "");
+                Label l =Controls.Find(replaced+"Display", true)[0] as Label;
+                l.Location = new Point(b.Location.X, b.Location.Y + 30);
 
+            }
         }
 
         private void DragMouseUp(object sender, MouseEventArgs e)
@@ -405,9 +408,8 @@ namespace Electronic_Circuit_Editor
                 TextBox X = new TextBox();
                 TextBox Y = new TextBox();
                 Button elementButton = new Button();
-               
-
-
+                Label displayElement = new Label();
+    
                 try
                 {
                     if (constructorText.Text != "electricity")
@@ -423,7 +425,7 @@ namespace Electronic_Circuit_Editor
                         Bitmap electricity = Electronic_Circuit_Editor.Properties.Resources.enter;
                         electricity.MakeTransparent(Color.White);
                         elementButton.Image = electricity;
-                        pictureBox2.Image = electricity;
+                     
                     }
 
                     elementButton.Location = new Point((int)(ClientSize.Width / 2), (int)(ClientSize.Width / 2));
@@ -435,23 +437,36 @@ namespace Electronic_Circuit_Editor
                     elementButton.MouseDown += DragMouseDown;
                     elementButton.MouseUp += DragMouseUp;
                     elementButton.MouseMove += DragMouseMove;
+                    elementButton.MouseEnter += OnElementEnter;
+                    elementButton.MouseLeave += OnElementLeave;
+                    
                     elementButton.Cursor = Cursors.Cross;
                     elementButton.FlatStyle = FlatStyle.Flat;
                     elementButton.BackColor = Color.White;
                     elementButton.ForeColor = Color.White;
                     elementButton.UseVisualStyleBackColor = true;
                     pictureBox1.Controls.Add(elementButton);
-                    Resistor res = new Resistor(1f, elementButton.Name);
-
+                    Electronics createdElectronics;
                     if (elementButton.Name != "electricity")
                     {
-                        electronics.Add(res);
+                        createdElectronics = new Resistor(1f, elementButton.Name);
+                        electronics.Add(createdElectronics);
                     }
                     else
                     {
-                        Electricity electricity = new Electricity("electricity");
-                        electronics.Add(electricity);
+                        createdElectronics = new Electricity("electricity");
+                        electronics.Add(createdElectronics);
                     }
+
+                    
+                    displayElement.ForeColor = Color.Orange;
+                    displayElement.AutoSize = true;
+                    displayElement.Location = new Point(elementButton.Location.X, elementButton.Location.Y+30);
+                    displayElement.Text = createdElectronics.Display();
+                    displayElement.FlatStyle = FlatStyle.Flat;
+                    displayElement.Name = constructorText.Text + "Display";
+                    displayElement.Visible = false;
+                    pictureBox1.Controls.Add(displayElement);
 
                     panel.Name = constructorText.Text + "Panel";
                     panel.AutoSize = true;
@@ -557,7 +572,9 @@ namespace Electronic_Circuit_Editor
                             try
                             {
                                 ((Resistor)el).Resistance = Convert.ToDouble(b.Text);
-                                MessageBox.Show(Convert.ToDouble(b.Text).ToString());
+                                ((Label)pictureBox1.Controls[name + "Display"]).Text = ((Resistor)el).Display();
+
+                                MessageBox.Show("Changed Resistance: " + Convert.ToDouble(b.Text).ToString());
                             }
                             catch (Exception ex)
                             {
@@ -569,7 +586,20 @@ namespace Electronic_Circuit_Editor
                 }
             }
         }
+        private void OnElementLeave(object sender, EventArgs e)
+        {
+            Button b = sender as Button;
+            Label l = pictureBox1.Controls[b.Name.Replace("Resistor", "") + "Display"] as Label;
 
+            l.Visible = false;
+        }
+        private void OnElementEnter(object sender, EventArgs e)
+        {
+            Button b = sender as Button;
+            Label l = pictureBox1.Controls[b.Name.Replace("Resistor", "") + "Display"] as Label;
+
+            l.Visible = true;
+        }
         private void button1_Click(object sender, EventArgs e)
         {
             pictureBox1.Image = new Bitmap(pictureBox1.Width, pictureBox1.Height);
@@ -584,8 +614,11 @@ namespace Electronic_Circuit_Editor
             int i = 0;
             foreach (var control in pictureBox1.Controls)
             {
-                heights[i] = ((Button)control).Location.Y;
-                i++;
+                if (control is Button)
+                {
+                    heights[i] = ((Button)control).Location.Y;
+                    i++;
+                }
             }
             return heights.Min();
         }
@@ -595,8 +628,12 @@ namespace Electronic_Circuit_Editor
             int i = 0;
             foreach (var control in pictureBox1.Controls)
             {
-                heights[i] = ((Button)control).Location.Y;
-                i++;
+                if (control is Button)
+                {
+                    heights[i] = ((Button)control).Location.Y;
+                    i++;
+                }
+                    
             }
             return heights.Max();
         }
@@ -629,7 +666,7 @@ namespace Electronic_Circuit_Editor
         {
             if(el.childList[0] is Electricity)
             {
-                MessageBox.Show(el.GetCircuitResistance().ToString());
+                MessageBox.Show("Calculated Resistance: "+el.GetCircuitResistance().ToString());
                 return;
             }
             try
@@ -687,6 +724,11 @@ namespace Electronic_Circuit_Editor
                 }
             }
             return b;
+        }
+
+        private void Form1_Resize(object sender, EventArgs e)
+        {
+            pictureBox1.Image = new Bitmap(pictureBox1.Width, pictureBox1.Height);
         }
     }
 }
