@@ -1,10 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace Electronic_Circuit_Editor
 {
@@ -12,7 +8,7 @@ namespace Electronic_Circuit_Editor
     {
         public List<Electronics> childList = new List<Electronics>();
         Color Color { get; set; }
-        readonly private Pen pen = new Pen(Color.Black,1f);
+        readonly private Pen pen = new Pen(Color.Black, 1f);
         Point startPoint = new Point();
         Point endPoint = new Point();
         bool isParallel { get; set; }
@@ -54,8 +50,8 @@ namespace Electronic_Circuit_Editor
         {
             return "Electricity";
         }
-        
-        
+
+
     }
     class Resistor : Electronics
     {
@@ -89,7 +85,7 @@ namespace Electronic_Circuit_Editor
 
         public override string Display()
         {
-            return "Resistor\n" + "Name: " + electronicsName+"\n"+"Resistance: "+Resistance;
+            return "Resistor\n" + "Name: " + electronicsName + "\n" + "Resistance: " + Resistance;
         }
     }
 

@@ -1,11 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Electronic_Circuit_Editor
@@ -57,7 +53,7 @@ namespace Electronic_Circuit_Editor
                 newPoint.Offset(ptOffset);
                 b.Location = newPoint;
                 string replaced = b.Name.Replace("Resistor", "");
-                Label l =Controls.Find(replaced+"Display", true)[0] as Label;
+                Label l = Controls.Find(replaced + "Display", true)[0] as Label;
                 l.Location = new Point(b.Location.X, b.Location.Y + 30);
 
             }
@@ -136,7 +132,7 @@ namespace Electronic_Circuit_Editor
                 Control TextBox = (TextBox)Controls.Find(name + "joinTextBox", true)[0];
                 int addLength = 7;
                 Pen pen = new Pen(Color.Black, 3.5f);
-              
+
                 if (name == "electricity")
                 {
 
@@ -145,14 +141,14 @@ namespace Electronic_Circuit_Editor
                 else if (pictureBox1.Controls[name + "Resistor"] != null)
                 {
                     thisControl = pictureBox1.Controls[name + "Resistor"];
-                    
+
                 }
                 else
                 {
                     MessageBox.Show("Error");
                 }
                 isParallel = ((CheckBox)flowLayoutPanel1.Controls.Find(name + "Parallel", true)[0]).Checked;
-               
+
                 if (TextBox.Text == "electricity")
                 {
 
@@ -214,7 +210,7 @@ namespace Electronic_Circuit_Editor
                     }
                     endPoint.Y = b.Location.Y + (b.Size.Height / 2);
                     point2 = new Point(startPoint.X - addLength, startPoint.Y);
-                    point3 = new Point(endPoint.X -addLength, startPoint.Y);
+                    point3 = new Point(endPoint.X - addLength, startPoint.Y);
                     point4 = new Point(endPoint.X - addLength, endPoint.Y);
                     using (var g = Graphics.FromImage(pictureBox1.Image))
                     {
@@ -283,7 +279,7 @@ namespace Electronic_Circuit_Editor
                     int modifyHeight = 0;
                     int maxHeight = GetMaxHeight();
                     int minHeight = GetMinHeight();
-                    
+
                     if ((b.Location.Y < thisControl.Location.Y + thisControl.Size.Height) && (b.Location.Y + b.Size.Height > thisControl.Location.Y))
                     {
                         MessageBox.Show("OK");
@@ -298,14 +294,14 @@ namespace Electronic_Circuit_Editor
                         }
                         if (startPoint.Y <= b.Location.Y)
                         {
-                            
+
                             startPoint.X = thisControl.Location.X + thisControl.Size.Width;
                             endPoint.X = b.Location.X;
                             endPoint.Y = b.Location.Y + (b.Size.Height / 2);
                             modifyHeight = thisControl.Location.Y - minHeight - 50;
                             point2 = new Point(startPoint.X + addLength, startPoint.Y);
                             point3 = new Point(startPoint.X + addLength, endPoint.Y - modifyHeight);
-                            point4 = new Point(endPoint.X -2, endPoint.Y - modifyHeight);
+                            point4 = new Point(endPoint.X - 2, endPoint.Y - modifyHeight);
                             locationX -= 2;
                         }
                         else
@@ -314,17 +310,17 @@ namespace Electronic_Circuit_Editor
                             startPoint.X = thisControl.Location.X + thisControl.Size.Width;
                             endPoint.X = b.Location.X;
                             endPoint.Y = b.Location.Y + (b.Size.Height / 2);
-                           
+
                             point2 = new Point(startPoint.X + addLength, startPoint.Y);
                             point3 = new Point(startPoint.X + addLength, endPoint.Y + modifyHeight);
-                            point4 = new Point(endPoint.X -2, endPoint.Y + modifyHeight);
+                            point4 = new Point(endPoint.X - 2, endPoint.Y + modifyHeight);
                             locationX -= 2;
                         }
 
                     }
                     else if (thisControl.Location.X < b.Location.X)
                     {
-                        
+
                         startPoint.X = thisControl.Location.X;
                         endPoint.X = b.Location.X + addLength;
                         if (thisControl.Size.Height % 2 == 0)
@@ -371,7 +367,7 @@ namespace Electronic_Circuit_Editor
                         pictureBox1.Refresh();
                     }
                 }
-              
+
                 string childName = b.Name;
                 foreach (var el in electronics)
                 {
@@ -409,7 +405,7 @@ namespace Electronic_Circuit_Editor
                 TextBox Y = new TextBox();
                 Button elementButton = new Button();
                 Label displayElement = new Label();
-    
+
                 try
                 {
                     if (constructorText.Text != "electricity")
@@ -425,7 +421,7 @@ namespace Electronic_Circuit_Editor
                         Bitmap electricity = Electronic_Circuit_Editor.Properties.Resources.enter;
                         electricity.MakeTransparent(Color.White);
                         elementButton.Image = electricity;
-                     
+
                     }
 
                     elementButton.Location = new Point((int)(ClientSize.Width / 2), (int)(ClientSize.Width / 2));
@@ -439,7 +435,7 @@ namespace Electronic_Circuit_Editor
                     elementButton.MouseMove += DragMouseMove;
                     elementButton.MouseEnter += OnElementEnter;
                     elementButton.MouseLeave += OnElementLeave;
-                    
+
                     elementButton.Cursor = Cursors.Cross;
                     elementButton.FlatStyle = FlatStyle.Flat;
                     elementButton.BackColor = Color.White;
@@ -458,10 +454,10 @@ namespace Electronic_Circuit_Editor
                         electronics.Add(createdElectronics);
                     }
 
-                    
+
                     displayElement.ForeColor = Color.Orange;
                     displayElement.AutoSize = true;
-                    displayElement.Location = new Point(elementButton.Location.X, elementButton.Location.Y+30);
+                    displayElement.Location = new Point(elementButton.Location.X, elementButton.Location.Y + 30);
                     displayElement.Text = createdElectronics.Display();
                     displayElement.FlatStyle = FlatStyle.Flat;
                     displayElement.Name = constructorText.Text + "Display";
@@ -536,14 +532,14 @@ namespace Electronic_Circuit_Editor
                         labelRes.Location = new Point(label2.Location.X, label2.Location.Y + 145);
                         labelRes.Text = "Resistance";
                         Resistance.Name = constructorText.Text + "Resistance";
-                        Resistance.Location = new Point(label2.Location.X , label2.Location.Y + 165);
+                        Resistance.Location = new Point(label2.Location.X, label2.Location.Y + 165);
                         Resistance.KeyDown += Resistance_Enter;
-                        
-                        
+
+
                         panel.Controls.Add(labelRes);
                         panel.Controls.Add(Resistance);
                     }
-                   
+
                 }
                 catch (Exception ex)
                 {
@@ -565,7 +561,7 @@ namespace Electronic_Circuit_Editor
                 foreach (var el in electronics)
                 {
                     MessageBox.Show(el.electronicsName);
-                    if (el.electronicsName == name+"Resistor")
+                    if (el.electronicsName == name + "Resistor")
                     {
                         if (el is Resistor)
                         {
@@ -633,14 +629,14 @@ namespace Electronic_Circuit_Editor
                     heights[i] = ((Button)control).Location.Y;
                     i++;
                 }
-                    
+
             }
             return heights.Max();
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
-            
+
             foreach (var el in electronics)
             {
                 el.ResetResistance();
@@ -664,9 +660,9 @@ namespace Electronic_Circuit_Editor
         List<string> used = new List<string>();
         void Childs(Electronics el)
         {
-            if(el.childList[0] is Electricity)
+            if (el.childList[0] is Electricity)
             {
-                MessageBox.Show("Calculated Resistance: "+el.GetCircuitResistance().ToString());
+                MessageBox.Show("Calculated Resistance: " + el.GetCircuitResistance().ToString());
                 return;
             }
             try
@@ -682,8 +678,8 @@ namespace Electronic_Circuit_Editor
                         r.currentConection = Resistor.Conections.Parallel;
                         mul *= r.GetResistance();
                         sum += r.GetResistance();
-                        
-                      
+
+
                     }
                     bool isUsed = false;
                     res.SetCircuitResistance(res.GetCircuitResistance() + (mul / sum));
