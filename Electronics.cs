@@ -7,12 +7,7 @@ namespace Electronic_Circuit_Editor
     abstract class Electronics
     {
         public List<Electronics> childList = new List<Electronics>();
-        Color Color { get; set; }
         readonly private Pen pen = new Pen(Color.Black, 1f);
-        Point startPoint = new Point();
-        Point endPoint = new Point();
-        bool isParallel { get; set; }
-        private Point[] points { get; set; }
         public static double CircuitResistance { get; set; }
         public String electronicsName { get; set; }
         public Electronics() { }
@@ -59,8 +54,9 @@ namespace Electronic_Circuit_Editor
         public Conections currentConection = Conections.Series;
 
         public double Resistance { get; set; }
+        public string realName { get; set; }
         public Resistor() { }
-        public Resistor(double Resistance, string electronicsName) { this.Resistance = Resistance; this.electronicsName = electronicsName; }
+        public Resistor(double Resistance, string electronicsName) { this.Resistance = Resistance; this.electronicsName = electronicsName; this.realName = electronicsName.Replace("Resistor", ""); }
         public Resistor(double Resistance) { this.Resistance = Resistance; }
         public double GetResistance()
         {
@@ -85,7 +81,7 @@ namespace Electronic_Circuit_Editor
 
         public override string Display()
         {
-            return "Resistor\n" + "Name: " + electronicsName + "\n" + "Resistance: " + Resistance;
+            return "Resistor\n" + "Name: " + realName + "\n" + "Resistance: " + Resistance;
         }
     }
 

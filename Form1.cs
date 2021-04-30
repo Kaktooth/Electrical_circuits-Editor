@@ -28,7 +28,7 @@ namespace Electronic_Circuit_Editor
         private void DragMouseDown(object sender, MouseEventArgs e)
         {
             Button b = ((Button)sender);
-           
+
             if (e.Button == MouseButtons.Left)
             {
                 b.MouseEnter -= OnElementEnter;
@@ -36,7 +36,7 @@ namespace Electronic_Circuit_Editor
                 isDragged = true;
                 Point ptStartPosition = b.PointToScreen(new Point(e.X, e.Y));
 
-               ;
+                ;
                 ptOffset.X = b.Location.X - ptStartPosition.X;
                 ptOffset.Y = b.Location.Y - ptStartPosition.Y;
             }
@@ -115,6 +115,7 @@ namespace Electronic_Circuit_Editor
                     else
                     {
                         MessageBox.Show("Error");
+                        return;
                     }
 
                     Control x = (TextBox)Controls.Find(name + "X", true)[0];
@@ -154,6 +155,7 @@ namespace Electronic_Circuit_Editor
                 else
                 {
                     MessageBox.Show("Error");
+                    return;
                 }
                 isParallel = ((CheckBox)flowLayoutPanel1.Controls.Find(name + "Parallel", true)[0]).Checked;
 
@@ -169,6 +171,7 @@ namespace Electronic_Circuit_Editor
                 else
                 {
                     MessageBox.Show("Error");
+                    return;
                 }
                 Point startPoint = new Point();
                 Point endPoint = new Point();
@@ -184,7 +187,7 @@ namespace Electronic_Circuit_Editor
                     int minHeight = GetMinHeight();
                     if (thisControl.Location.X > b.Location.X)
                     {
-                        
+
                         if (thisControl.Size.Height % 2 == 0)
                         {
                             startPoint.Y = thisControl.Location.Y + (thisControl.Size.Height / 2);
@@ -205,7 +208,7 @@ namespace Electronic_Circuit_Editor
                             point3 = new Point(startPoint.X + addLength, endPoint.Y + modifyHeight);
                             point4 = new Point(endPoint.X - 2, endPoint.Y + modifyHeight);
                             locationX -= 2;
-                            
+
                         }
                         else
                         {
@@ -220,7 +223,7 @@ namespace Electronic_Circuit_Editor
                             locationX -= 2;
                         }
                     }
-                  
+
                     using (var g = Graphics.FromImage(pictureBox1.Image))
                     {
                         g.DrawLine(pen, startPoint, point2);
@@ -385,7 +388,7 @@ namespace Electronic_Circuit_Editor
                             if (el2.electronicsName == childName)
                             {
                                 el.childList.Add(el2);
-                                MessageBox.Show("Parent: " + el.electronicsName + " Child: " + el2.electronicsName);
+                                //MessageBox.Show("Parent: " + el.electronicsName + " Child: " + el2.electronicsName);
                             }
                         }
 
@@ -462,11 +465,12 @@ namespace Electronic_Circuit_Editor
                     }
 
 
-                    displayElement.ForeColor = Color.Orange;
+                    displayElement.ForeColor = Color.OrangeRed;
                     displayElement.AutoSize = true;
                     displayElement.Location = new Point(elementButton.Location.X, elementButton.Location.Y + 30);
                     displayElement.Text = createdElectronics.Display();
                     displayElement.FlatStyle = FlatStyle.Flat;
+                    displayElement.Font = new System.Drawing.Font("Arial", 10F);
                     displayElement.Name = constructorText.Text + "Display";
                     displayElement.Visible = false;
                     pictureBox1.Controls.Add(displayElement);
@@ -484,11 +488,13 @@ namespace Electronic_Circuit_Editor
 
                     labelName.Name = constructorText.Text + "NameLabel";
                     labelName.Text = "Name: " + constructorText.Text;
+                    labelName.Font = new System.Drawing.Font("Arial", 10F);
                     labelName.AutoSize = true;
 
 
                     label1.Name = constructorText.Text + "Label1";
                     label1.Text = "Location: ";
+                    label1.Font = new System.Drawing.Font("Arial", 10F);
                     label1.AutoSize = true;
 
 
@@ -502,44 +508,48 @@ namespace Electronic_Circuit_Editor
                     X.KeyDown += ResistorLocationCheck;
                     Y.KeyDown += ResistorLocationCheck;
 
-                    label2.Location = new Point(label1.Location.X, label1.Location.Y + 60);
-                    label2.Name = constructorText.Text + "Label2";
-                    label2.Text = "Reverse Electronics: ";
-                    label2.AutoSize = true;
+                    //label2.Location = new Point(label1.Location.X, label1.Location.Y + 60);
+                    //label2.Name = constructorText.Text + "Label2";
+                    //label2.Text = "Reverse Electronics: ";
+                    //label2.AutoSize = true;
 
-                    label3.Location = new Point(label2.Location.X, label2.Location.Y + 60);
+                    label3.Location = new Point(label2.Location.X, label2.Location.Y + 85);
                     label3.Name = constructorText.Text + "Label3";
                     label3.Text = "Join Electronics: ";
+                    label3.Font = new System.Drawing.Font("Arial", 10F);
                     label3.AutoSize = true;
 
-                    joinTextBox.Location = new Point(label2.Location.X, label2.Location.Y + 75);
-                    joinTextBox.Name = constructorText.Text + "Label3";
+                    joinTextBox.Location = new Point(label2.Location.X, label2.Location.Y + 105);
+                    joinTextBox.Font = new System.Drawing.Font("Arial", 10F);
                     joinTextBox.AutoSize = true;
                     joinTextBox.Name = constructorText.Text + "joinTextBox";
 
                     CheckBox isParallel = new CheckBox();
-                    isParallel.Location = new Point(label2.Location.X, label2.Location.Y + 95);
+                    isParallel.Location = new Point(label2.Location.X, label2.Location.Y + 130);
                     isParallel.Text = "isParallel";
                     isParallel.AutoSize = true;
                     isParallel.Name = constructorText.Text + "Parallel";
+                    isParallel.Font = new System.Drawing.Font("Arial", 10F);
                     panel.Controls.Add(isParallel);
 
-                    joinButton.Location = new Point(label2.Location.X, label2.Location.Y + 120);
+                    joinButton.Location = new Point(label2.Location.X, label2.Location.Y + 150);
                     joinButton.Name = constructorText.Text + "Join";
                     joinButton.Text = "Join";
                     joinButton.AutoSize = true;
                     joinButton.Click += JoinElectronics;
-
+                    joinButton.Font = new System.Drawing.Font("Arial", 10F);
 
                     if (elementButton.Name != "electricity")
                     {
                         Label labelRes = new Label();
                         TextBox Resistance = new TextBox();
                         labelRes.Name = constructorText.Text + "labelres";
-                        labelRes.Location = new Point(label2.Location.X, label2.Location.Y + 145);
+                        labelRes.Location = new Point(label2.Location.X, label2.Location.Y + 190);
                         labelRes.Text = "Resistance";
+                        labelRes.Font = new System.Drawing.Font("Arial", 10F);
+
                         Resistance.Name = constructorText.Text + "Resistance";
-                        Resistance.Location = new Point(label2.Location.X, label2.Location.Y + 170);
+                        Resistance.Location = new Point(label2.Location.X, label2.Location.Y + 215);
                         Resistance.KeyDown += Resistance_Enter;
 
 
@@ -567,7 +577,7 @@ namespace Electronic_Circuit_Editor
                 name = name.Replace("Resistance", "");
                 foreach (var el in electronics)
                 {
-                    MessageBox.Show(el.electronicsName);
+                    //MessageBox.Show(el.electronicsName);
                     if (el.electronicsName == name + "Resistor")
                     {
                         if (el is Resistor)
@@ -666,13 +676,15 @@ namespace Electronic_Circuit_Editor
         List<string> used = new List<string>();
         void Childs(Electronics el)
         {
-            if (el.childList[0] is Electricity)
-            {
-                MessageBox.Show("Calculated Resistance: " + el.GetCircuitResistance().ToString());
-                return;
-            }
             try
             {
+                if (el.childList[0] is Electricity)
+                {
+                    MessageBox.Show("Calculated Resistance: " + el.GetCircuitResistance().ToString());
+                    textBox1.Text = el.GetCircuitResistance().ToString();
+                    return;
+                }
+
                 if (el.childList.Count > 1)
                 {
                     Resistor res = el.childList[0] as Resistor;
@@ -730,7 +742,92 @@ namespace Electronic_Circuit_Editor
 
         private void Form1_Resize(object sender, EventArgs e)
         {
-            pictureBox1.Image = new Bitmap(pictureBox1.Width, pictureBox1.Height);
+            try
+            {
+                pictureBox1.Image = new Bitmap(pictureBox1.Width, pictureBox1.Height);
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            foreach (var _electronics in electronics)
+            {
+                if ((_electronics.electronicsName.Replace("Resistor", "") == constructorText.Text)
+                    && constructorText.Text != "electricity")
+                {
+                    electronics.Remove(_electronics);
+                    var findControl = Controls.Find(constructorText.Text + "Resistor", true)[0];
+
+                    var findDisplayLabel = Controls.Find(constructorText.Text + "Display", true)[0];
+                    pictureBox1.Controls.Remove(findControl);
+                    pictureBox1.Controls.Remove(findDisplayLabel);
+                    break;
+                }
+
+            }
+        }
+
+        private void constructorPanelToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (flowLayoutPanel1.Visible)
+            {
+                flowLayoutPanel1.Visible = false;
+            }
+            else
+            {
+                flowLayoutPanel1.Visible = true;
+            }
+        }
+
+        private void calculationPanelToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (panel1.Visible)
+            {
+                panel1.Visible = false;
+            }
+            else
+            {
+                panel1.Visible = true;
+            }
+        }
+
+        private void saveAsImageToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Bitmap bitmap = new Bitmap(pictureBox1.Width,pictureBox1.Height);
+            using (Graphics g = Graphics.FromImage(bitmap))
+            {
+                for (int i = 0; i < bitmap.Width; i++)
+                {
+                    for (int j = 0; j < bitmap.Height; j++)
+                    {
+                        bitmap.SetPixel(i, j, Color.White);
+                    }
+                }
+                g.DrawImage(pictureBox1.Image,0,0);
+                foreach (var el in electronics)
+                {
+
+                    var b = ((Button)pictureBox1.Controls[el.electronicsName]);
+                    if (el is Electricity)
+                    {
+                        g.DrawImage(b.Image, new Point(b.Location.X, b.Location.Y-2));
+                    }
+                    else
+                    {
+                        g.DrawImage(b.Image, new Point(b.Location.X, b.Location.Y+3));
+                    }
+                }
+            }
+            SaveFileDialog sf = new SaveFileDialog();
+            sf.Filter = "JPG(*.JPG)|*.jpg";
+            if (sf.ShowDialog() == DialogResult.OK)
+            {
+                bitmap.Save(sf.FileName);
+            }
         }
     }
 }
