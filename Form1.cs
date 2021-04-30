@@ -575,14 +575,13 @@ namespace Electronic_Circuit_Editor
                             try
                             {
                                 ((Resistor)el).Resistance = Convert.ToDouble(b.Text);
-                                ((Label)pictureBox1.Controls[name + "Display"]).Text = ((Resistor)el).Display();
-
                                 MessageBox.Show("Changed Resistance: " + Convert.ToDouble(b.Text).ToString());
                             }
                             catch (Exception ex)
                             {
                                 MessageBox.Show("Wrong Format");
                             }
+                            ((Label)pictureBox1.Controls[name + "Display"]).Text = el.Display();
                         }
 
                     }
