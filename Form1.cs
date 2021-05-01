@@ -508,11 +508,6 @@ namespace Electronic_Circuit_Editor
                     X.KeyDown += ResistorLocationCheck;
                     Y.KeyDown += ResistorLocationCheck;
 
-                    //label2.Location = new Point(label1.Location.X, label1.Location.Y + 60);
-                    //label2.Name = constructorText.Text + "Label2";
-                    //label2.Text = "Reverse Electronics: ";
-                    //label2.AutoSize = true;
-
                     label3.Location = new Point(label2.Location.X, label2.Location.Y + 85);
                     label3.Name = constructorText.Text + "Label3";
                     label3.Text = "Join Electronics: ";
@@ -591,10 +586,10 @@ namespace Electronic_Circuit_Editor
                             {
                                 MessageBox.Show("Wrong Format");
                             }
-                            ((Label)pictureBox1.Controls[name + "Display"]).Text = el.Display();
+                           
                         }
-
                     }
+                     ((Label)pictureBox1.Controls[name + "Display"]).Text = el.Display();
                 }
             }
         }
@@ -656,11 +651,6 @@ namespace Electronic_Circuit_Editor
             foreach (var el in electronics)
             {
                 el.ResetResistance();
-                //el.isParallel = ((CheckBox)flowLayoutPanel1.Controls.Find(el.electronicsName + "Parallel", true)[0]).Checked;
-                //if(el.isParallel == true && el is Resistor)
-                //{
-                //    ((Resistor)el).currentConection = Resistor.Conections.Parallel;
-                //}
             }
             foreach (var el in electronics)
             {
@@ -797,7 +787,7 @@ namespace Electronic_Circuit_Editor
 
         private void saveAsImageToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Bitmap bitmap = new Bitmap(pictureBox1.Width,pictureBox1.Height);
+            Bitmap bitmap = new Bitmap(pictureBox1.Width, pictureBox1.Height);
             using (Graphics g = Graphics.FromImage(bitmap))
             {
                 for (int i = 0; i < bitmap.Width; i++)
@@ -807,18 +797,18 @@ namespace Electronic_Circuit_Editor
                         bitmap.SetPixel(i, j, Color.White);
                     }
                 }
-                g.DrawImage(pictureBox1.Image,0,0);
+                g.DrawImage(pictureBox1.Image, 0, 0);
                 foreach (var el in electronics)
                 {
 
                     var b = ((Button)pictureBox1.Controls[el.electronicsName]);
                     if (el is Electricity)
                     {
-                        g.DrawImage(b.Image, new Point(b.Location.X, b.Location.Y-2));
+                        g.DrawImage(b.Image, new Point(b.Location.X, b.Location.Y - 2));
                     }
                     else
                     {
-                        g.DrawImage(b.Image, new Point(b.Location.X, b.Location.Y+3));
+                        g.DrawImage(b.Image, new Point(b.Location.X, b.Location.Y + 3));
                     }
                 }
             }

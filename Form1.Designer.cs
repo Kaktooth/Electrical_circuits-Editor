@@ -237,7 +237,7 @@ namespace Electronic_Circuit_Editor
             // saveAsImageToolStripMenuItem
             // 
             this.saveAsImageToolStripMenuItem.Name = "saveAsImageToolStripMenuItem";
-            this.saveAsImageToolStripMenuItem.Size = new System.Drawing.Size(224, 28);
+            this.saveAsImageToolStripMenuItem.Size = new System.Drawing.Size(203, 28);
             this.saveAsImageToolStripMenuItem.Text = "Save as Image";
             this.saveAsImageToolStripMenuItem.Click += new System.EventHandler(this.saveAsImageToolStripMenuItem_Click);
             // 

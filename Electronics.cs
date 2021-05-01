@@ -7,7 +7,7 @@ namespace Electronic_Circuit_Editor
     abstract class Electronics
     {
         public List<Electronics> childList = new List<Electronics>();
-        readonly private Pen pen = new Pen(Color.Black, 1f);
+        public Point location { get; set; }
         public static double CircuitResistance { get; set; }
         public String electronicsName { get; set; }
         public Electronics() { }
