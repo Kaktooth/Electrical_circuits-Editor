@@ -407,6 +407,8 @@ namespace Electronic_Circuit_Editor
                 Label label1 = new Label();
                 Label label2 = new Label();
                 Label label3 = new Label();
+                Label labelX = new Label();
+                Label labelY = new Label();
                 Label labelName = new Label();
                 TextBox joinTextBox = new TextBox();
                 Button joinButton = new Button();
@@ -480,6 +482,8 @@ namespace Electronic_Circuit_Editor
                     panel.Controls.Add(label1);
                     panel.Controls.Add(label2);
                     panel.Controls.Add(label3);
+                    panel.Controls.Add(labelX);
+                    panel.Controls.Add(labelY);
                     panel.Controls.Add(X);
                     panel.Controls.Add(Y);
                     panel.Controls.Add(joinButton);
@@ -496,40 +500,55 @@ namespace Electronic_Circuit_Editor
                     label1.Font = new System.Drawing.Font("Arial", 10F);
                     label1.AutoSize = true;
 
+                    labelX.Location = new Point(label1.Location.X, label1.Location.Y + 41);
+                    labelY.Location = new Point(label1.Location.X, label1.Location.Y + 61);
+                    labelX.Text = "X";
+                    labelY.Text = "Y";
+                    labelX.AutoSize = true;
+                    labelY.AutoSize = true;
 
                     X.Name = constructorText.Text + "X";
                     Y.Name = constructorText.Text + "Y";
                     label1.Location = new Point(labelName.Location.X, labelName.Location.Y + 20);
-                    X.Location = new Point(label1.Location.X + label1.Text.Length + 10, label1.Location.Y + 20);
-                    Y.Location = new Point(label1.Location.X + label1.Text.Length + 10, label1.Location.Y + 40);
+                    X.Location = new Point(label1.Location.X + label1.Text.Length + 20, label1.Location.Y + 20);
+                    Y.Location = new Point(label1.Location.X + label1.Text.Length + 20, label1.Location.Y + 40);
                     X.Text = elementButton.Location.X.ToString();
+                    X.Width = 161;
+                    X.Height = 22;
                     Y.Text = elementButton.Location.Y.ToString();
+                    Y.Width = 161;
+                    Y.Height = 22;
                     X.KeyDown += ResistorLocationCheck;
                     Y.KeyDown += ResistorLocationCheck;
 
-                    label3.Location = new Point(label2.Location.X, label2.Location.Y + 85);
+
+
+                    label3.Location = new Point(label2.Location.X, label2.Location.Y + 105);
                     label3.Name = constructorText.Text + "Label3";
                     label3.Text = "Join Electronics: ";
                     label3.Font = new System.Drawing.Font("Arial", 10F);
                     label3.AutoSize = true;
 
-                    joinTextBox.Location = new Point(label2.Location.X, label2.Location.Y + 105);
+                    joinTextBox.Location = new Point(label2.Location.X, label2.Location.Y + 125);
                     joinTextBox.Font = new System.Drawing.Font("Arial", 10F);
                     joinTextBox.AutoSize = true;
+                    joinTextBox.Width = 161;
+                    joinTextBox.Height = 22;
                     joinTextBox.Name = constructorText.Text + "joinTextBox";
 
                     CheckBox isParallel = new CheckBox();
-                    isParallel.Location = new Point(label2.Location.X, label2.Location.Y + 130);
+                    isParallel.Location = new Point(label2.Location.X, label2.Location.Y + 160);
                     isParallel.Text = "isParallel";
                     isParallel.AutoSize = true;
                     isParallel.Name = constructorText.Text + "Parallel";
                     isParallel.Font = new System.Drawing.Font("Arial", 10F);
                     panel.Controls.Add(isParallel);
 
-                    joinButton.Location = new Point(label2.Location.X, label2.Location.Y + 150);
+                    joinButton.Location = new Point(label2.Location.X, label2.Location.Y + 180);
                     joinButton.Name = constructorText.Text + "Join";
                     joinButton.Text = "Join";
-                    joinButton.AutoSize = true;
+                    joinButton.Width = 161;
+                    joinButton.Height = 43;
                     joinButton.Click += JoinElectronics;
                     joinButton.Font = new System.Drawing.Font("Arial", 10F);
 
@@ -538,14 +557,15 @@ namespace Electronic_Circuit_Editor
                         Label labelRes = new Label();
                         TextBox Resistance = new TextBox();
                         labelRes.Name = constructorText.Text + "labelres";
-                        labelRes.Location = new Point(label2.Location.X, label2.Location.Y + 190);
+                        labelRes.Location = new Point(label2.Location.X, label2.Location.Y + 250);
                         labelRes.Text = "Resistance";
                         labelRes.Font = new System.Drawing.Font("Arial", 10F);
 
                         Resistance.Name = constructorText.Text + "Resistance";
-                        Resistance.Location = new Point(label2.Location.X, label2.Location.Y + 215);
+                        Resistance.Location = new Point(label2.Location.X, label2.Location.Y + 275);
                         Resistance.KeyDown += Resistance_Enter;
-
+                        Resistance.Width = 161;
+                        Resistance.Height = 22;
 
                         panel.Controls.Add(labelRes);
                         panel.Controls.Add(Resistance);
@@ -585,7 +605,7 @@ namespace Electronic_Circuit_Editor
                             {
                                 MessageBox.Show("Wrong Format");
                             }
-                           
+
                         }
                     }
                      ((Label)pictureBox1.Controls[name + "Display"]).Text = el.Display();
