@@ -36,7 +36,6 @@ namespace Electronic_Circuit_Editor
                 isDragged = true;
                 Point ptStartPosition = b.PointToScreen(new Point(e.X, e.Y));
 
-                ;
                 ptOffset.X = b.Location.X - ptStartPosition.X;
                 ptOffset.Y = b.Location.Y - ptStartPosition.Y;
             }
@@ -818,6 +817,11 @@ namespace Electronic_Circuit_Editor
             {
                 bitmap.Save(sf.FileName);
             }
+        }
+
+        private void panel3_Paint(object sender, PaintEventArgs e)
+        {
+
         }
     }
 }

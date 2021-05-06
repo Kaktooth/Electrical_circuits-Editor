@@ -7,7 +7,6 @@ namespace Electronic_Circuit_Editor
     abstract class Electronics
     {
         public List<Electronics> childList = new List<Electronics>();
-        public Point location { get; set; }
         public static double CircuitResistance { get; set; }
         public String electronicsName { get; set; }
         public Electronics() { }

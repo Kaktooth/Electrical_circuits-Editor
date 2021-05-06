@@ -36,6 +36,7 @@ namespace Electronic_Circuit_Editor
             this.label1 = new System.Windows.Forms.Label();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.label2 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
             this.constructorText = new System.Windows.Forms.TextBox();
             this.button2 = new System.Windows.Forms.Button();
@@ -59,42 +60,44 @@ namespace Electronic_Circuit_Editor
             // 
             this.panel1.AllowDrop = true;
             this.panel1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.panel1.BackColor = System.Drawing.Color.Gainsboro;
-            this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel1.BackColor = System.Drawing.Color.White;
             this.panel1.Controls.Add(this.panel3);
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Right;
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panel1.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.panel1.Location = new System.Drawing.Point(632, 31);
+            this.panel1.Location = new System.Drawing.Point(0, 364);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(168, 419);
+            this.panel1.Size = new System.Drawing.Size(800, 86);
             this.panel1.TabIndex = 0;
             // 
             // panel3
             // 
-            this.panel3.BackColor = System.Drawing.Color.Silver;
+            this.panel3.BackColor = System.Drawing.Color.White;
+            this.panel3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel3.Controls.Add(this.textBox1);
             this.panel3.Controls.Add(this.button3);
             this.panel3.Controls.Add(this.label1);
-            this.panel3.Location = new System.Drawing.Point(3, 3);
+            this.panel3.Dock = System.Windows.Forms.DockStyle.Right;
+            this.panel3.Location = new System.Drawing.Point(0, 0);
+            this.panel3.Margin = new System.Windows.Forms.Padding(0);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(158, 98);
+            this.panel3.Size = new System.Drawing.Size(800, 86);
             this.panel3.TabIndex = 4;
+            this.panel3.Paint += new System.Windows.Forms.PaintEventHandler(this.panel3_Paint);
             // 
             // textBox1
             // 
-            this.textBox1.BackColor = System.Drawing.Color.Silver;
-            this.textBox1.Location = new System.Drawing.Point(6, 66);
+            this.textBox1.BackColor = System.Drawing.Color.White;
+            this.textBox1.Location = new System.Drawing.Point(457, 25);
             this.textBox1.Name = "textBox1";
             this.textBox1.ReadOnly = true;
-            this.textBox1.Size = new System.Drawing.Size(137, 22);
+            this.textBox1.Size = new System.Drawing.Size(113, 22);
             this.textBox1.TabIndex = 5;
             // 
             // button3
             // 
-            this.button3.Dock = System.Windows.Forms.DockStyle.Top;
-            this.button3.Location = new System.Drawing.Point(0, 0);
+            this.button3.Location = new System.Drawing.Point(615, 15);
             this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(158, 24);
+            this.button3.Size = new System.Drawing.Size(173, 42);
             this.button3.TabIndex = 4;
             this.button3.Text = "Calculate Resistance";
             this.button3.UseVisualStyleBackColor = true;
@@ -103,18 +106,18 @@ namespace Electronic_Circuit_Editor
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(3, 46);
+            this.label1.Location = new System.Drawing.Point(373, 25);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(152, 17);
+            this.label1.Size = new System.Drawing.Size(78, 17);
             this.label1.TabIndex = 0;
-            this.label1.Text = "Calculated Resistance:";
+            this.label1.Text = "Resistance";
             // 
             // flowLayoutPanel1
             // 
             this.flowLayoutPanel1.AllowDrop = true;
             this.flowLayoutPanel1.AutoScroll = true;
             this.flowLayoutPanel1.AutoSize = true;
-            this.flowLayoutPanel1.BackColor = System.Drawing.Color.Gainsboro;
+            this.flowLayoutPanel1.BackColor = System.Drawing.Color.White;
             this.flowLayoutPanel1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.flowLayoutPanel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.flowLayoutPanel1.Controls.Add(this.panel2);
@@ -122,58 +125,71 @@ namespace Electronic_Circuit_Editor
             this.flowLayoutPanel1.ImeMode = System.Windows.Forms.ImeMode.On;
             this.flowLayoutPanel1.Location = new System.Drawing.Point(0, 31);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(284, 419);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(284, 333);
             this.flowLayoutPanel1.TabIndex = 3;
             // 
             // panel2
             // 
-            this.panel2.BackColor = System.Drawing.Color.Silver;
+            this.panel2.BackColor = System.Drawing.Color.White;
+            this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel2.Controls.Add(this.label2);
             this.panel2.Controls.Add(this.button1);
             this.panel2.Controls.Add(this.constructorText);
             this.panel2.Controls.Add(this.button2);
             this.panel2.Controls.Add(this.addResistor);
             this.panel2.Location = new System.Drawing.Point(3, 3);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(276, 88);
+            this.panel2.Size = new System.Drawing.Size(276, 234);
             this.panel2.TabIndex = 0;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(51, 16);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(118, 17);
+            this.label2.TabIndex = 6;
+            this.label2.Text = "Electronics Name";
             // 
             // button1
             // 
-            this.button1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.button1.Location = new System.Drawing.Point(0, 53);
+            this.button1.BackColor = System.Drawing.Color.Gainsboro;
+            this.button1.Location = new System.Drawing.Point(54, 180);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(276, 35);
+            this.button1.Size = new System.Drawing.Size(161, 35);
             this.button1.TabIndex = 3;
             this.button1.Text = "Disconnect All";
-            this.button1.UseVisualStyleBackColor = true;
+            this.button1.UseVisualStyleBackColor = false;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // constructorText
             // 
-            this.constructorText.BackColor = System.Drawing.Color.Silver;
-            this.constructorText.Location = new System.Drawing.Point(192, 14);
+            this.constructorText.BackColor = System.Drawing.Color.White;
+            this.constructorText.Location = new System.Drawing.Point(54, 36);
             this.constructorText.Name = "constructorText";
-            this.constructorText.Size = new System.Drawing.Size(80, 22);
+            this.constructorText.Size = new System.Drawing.Size(161, 22);
             this.constructorText.TabIndex = 2;
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(111, 4);
+            this.button2.BackColor = System.Drawing.Color.Gainsboro;
+            this.button2.Location = new System.Drawing.Point(54, 131);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 43);
+            this.button2.Size = new System.Drawing.Size(161, 43);
             this.button2.TabIndex = 1;
             this.button2.Text = "Delete";
-            this.button2.UseVisualStyleBackColor = true;
+            this.button2.UseVisualStyleBackColor = false;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // addResistor
             // 
-            this.addResistor.Location = new System.Drawing.Point(3, 4);
+            this.addResistor.BackColor = System.Drawing.Color.Gainsboro;
+            this.addResistor.Location = new System.Drawing.Point(54, 82);
             this.addResistor.Name = "addResistor";
-            this.addResistor.Size = new System.Drawing.Size(102, 43);
+            this.addResistor.Size = new System.Drawing.Size(161, 43);
             this.addResistor.TabIndex = 0;
             this.addResistor.Text = "Add Resistor";
-            this.addResistor.UseVisualStyleBackColor = true;
+            this.addResistor.UseVisualStyleBackColor = false;
             this.addResistor.Click += new System.EventHandler(this.AddResistor_Click);
             // 
             // pictureBox1
@@ -188,7 +204,7 @@ namespace Electronic_Circuit_Editor
             // 
             // menuStrip1
             // 
-            this.menuStrip1.BackColor = System.Drawing.Color.Silver;
+            this.menuStrip1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(9)))), ((int)(((byte)(88)))), ((int)(((byte)(153)))));
             this.menuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.Windows,
@@ -203,7 +219,7 @@ namespace Electronic_Circuit_Editor
             // 
             // Windows
             // 
-            this.Windows.BackColor = System.Drawing.Color.Gainsboro;
+            this.Windows.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(9)))), ((int)(((byte)(88)))), ((int)(((byte)(153)))));
             this.Windows.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.constructorPanelToolStripMenuItem,
             this.calculationPanelToolStripMenuItem});
@@ -213,6 +229,7 @@ namespace Electronic_Circuit_Editor
             // 
             // constructorPanelToolStripMenuItem
             // 
+            this.constructorPanelToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
             this.constructorPanelToolStripMenuItem.Name = "constructorPanelToolStripMenuItem";
             this.constructorPanelToolStripMenuItem.Size = new System.Drawing.Size(230, 28);
             this.constructorPanelToolStripMenuItem.Text = "Constructor Panel";
@@ -220,6 +237,7 @@ namespace Electronic_Circuit_Editor
             // 
             // calculationPanelToolStripMenuItem
             // 
+            this.calculationPanelToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
             this.calculationPanelToolStripMenuItem.Name = "calculationPanelToolStripMenuItem";
             this.calculationPanelToolStripMenuItem.Size = new System.Drawing.Size(230, 28);
             this.calculationPanelToolStripMenuItem.Text = "Calculation Panel";
@@ -227,7 +245,7 @@ namespace Electronic_Circuit_Editor
             // 
             // toolsToolStripMenuItem
             // 
-            this.toolsToolStripMenuItem.BackColor = System.Drawing.Color.Gainsboro;
+            this.toolsToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(9)))), ((int)(((byte)(88)))), ((int)(((byte)(153)))));
             this.toolsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.saveAsImageToolStripMenuItem});
             this.toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
@@ -236,6 +254,7 @@ namespace Electronic_Circuit_Editor
             // 
             // saveAsImageToolStripMenuItem
             // 
+            this.saveAsImageToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
             this.saveAsImageToolStripMenuItem.Name = "saveAsImageToolStripMenuItem";
             this.saveAsImageToolStripMenuItem.Size = new System.Drawing.Size(203, 28);
             this.saveAsImageToolStripMenuItem.Text = "Save as Image";
@@ -294,6 +313,7 @@ namespace Electronic_Circuit_Editor
         private System.Windows.Forms.ToolStripMenuItem calculationPanelToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem toolsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem saveAsImageToolStripMenuItem;
+        private System.Windows.Forms.Label label2;
     }
 }
 
