@@ -88,8 +88,6 @@ namespace Electronic_Circuit_Editor
                 b.MouseEnter += OnElementEnter;
                 b.MouseLeave += OnElementLeave;
             }
-
-
         }
 
 
@@ -772,8 +770,14 @@ namespace Electronic_Circuit_Editor
                     var findControl = Controls.Find(constructorText.Text + "Resistor", true)[0];
 
                     var findDisplayLabel = Controls.Find(constructorText.Text + "Display", true)[0];
+                    var findPanel = Controls.Find(constructorText.Text + "Panel", true)[0];
                     pictureBox1.Controls.Remove(findControl);
                     pictureBox1.Controls.Remove(findDisplayLabel);
+                    flowLayoutPanel1.Controls.Remove(findPanel);
+                    //foreach (var name in flowLayoutPanel1.Controls)
+                    //{
+                    //    MessageBox.Show(name.ToString());
+                    //}
                     break;
                 }
 
