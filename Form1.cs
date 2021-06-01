@@ -606,7 +606,7 @@ namespace Electronic_Circuit_Editor
 
                         }
                     }
-                     ((Label)pictureBox1.Controls[name + "Display"]).Text = el.Display();
+                     ((Label)pictureBox1.Controls[el.electronicsName.Replace("Resistor","") + "Display"]).Text = el.Display();
                 }
             }
         }
